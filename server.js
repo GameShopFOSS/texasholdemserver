@@ -116,7 +116,7 @@ async function attemptToSignUp(client, requestBody, vipLevel){
     //db.close();
   });
 
-   console.log(resultOfInsert);
+   //console.log(resultOfInsert);
 } catch(e) {
 	console.log(e);
 
