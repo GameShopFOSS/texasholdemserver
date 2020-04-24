@@ -139,7 +139,7 @@ app.post('/encryptionTest', (req, res) => {
 
 })
 
-app.post('/signup', (req, res) => {
+app.post('/signup', async (req, res) => {
 	
 	// var email = req.body.email;
 	// var firstname = req.body.firstname;
