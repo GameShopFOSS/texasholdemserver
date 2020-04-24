@@ -56,7 +56,8 @@ async function listDatabases(client){
 app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/goodbye', (req, res) => res.send('Goodbye World!'))
 app.post('/encryptionTest', (req, res) => {
-	var decryptedString = Encryption.decrypt(req.body.encryptedString);
+	var encryptionService = new Encryption();
+	var decryptedString = encryptionService.decrypt(req.body.encryptedString);
 
 	res.send(decryptedString);
 
