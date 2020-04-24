@@ -9,7 +9,7 @@ var crypto = require('crypto'),
 class EncryptionService{
 
 
-function encrypt(text) {
+ encrypt(text) {
   var cipher = crypto.createCipheriv(algorithm, password, iv)
   var encrypted = cipher.update(text, 'utf8', 'hex')
   encrypted += cipher.final('hex');
@@ -20,7 +20,7 @@ function encrypt(text) {
   };
 }
 
-function decrypt(encrypted) {
+ decrypt(encrypted) {
   var decipher = crypto.createDecipheriv(algorithm, password, iv)
   decipher.setAuthTag(encrypted.tag);
   var dec = decipher.update(encrypted.content, 'hex', 'utf8')
