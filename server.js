@@ -57,7 +57,7 @@ async function listDatabases(client){
 async function verifyEmail(client, email){
 	 const db = await client.db('game');
 	 const collection = await db.collection('userData');
-	var emailAddress =  collection.findOne({name: '' + email}, (err, item) => {
+	var emailAddress =  await collection.find({name: '' + email}).toArray();//, (err, item) => {
 	 // 	if (item){
 		// console.log(item);
 		// return item;
@@ -66,7 +66,7 @@ async function verifyEmail(client, email){
 	 // 	}
 	 // 	return "";
   
-}).toArray();
+//}).toArray();
 
 	 if (emailAddress.length > 0){
 	 	return true;
@@ -92,7 +92,7 @@ async function attemptToSignUp(client, requestBody, vipLevel){
 
   const db = await client.db('game');
   const collection = await db.collection('userData');
- const userInsert =  collection.insertOne(
+ var userInsert =  await collection.insert(
  	{email: '' + requestBody.email,
  	  firstname: '' + requestBody.firstname,
 	lastname:'' + requestBody.lastname,
@@ -107,7 +107,7 @@ async function attemptToSignUp(client, requestBody, vipLevel){
      loggedIn: 'true',
      lastUpdate: '0'
 
-}, (err, result) => {
+}).toArray();//, (err, result) => {
 // if (result){
 // 		console.log(result);
 // 		return result;
@@ -115,7 +115,7 @@ async function attemptToSignUp(client, requestBody, vipLevel){
 // 	 		console.log("failed");
 // 	 	}
 // 	 	return "";
-}).toArray();
+//}).toArray();
 
  if (userInsert.length > 0){
 	 	return true;
