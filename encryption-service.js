@@ -31,7 +31,7 @@ constructor() {
 }
 }
 
-module.exports = EncryptionService;
+module.exports = {EncryptionService};
 //var hw = encrypt("hello world")
 // outputs hello world
 //console.log(decrypt(hw));
