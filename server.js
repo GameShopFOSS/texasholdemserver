@@ -107,6 +107,7 @@ async function attemptToSignUp(client, requestBody, vipLevel){
      hasReceivedPurchaseBonus:  '' + hasReceivedPurchaseBonus,
      giftValuesOrMerchandiseAmount: '' + giftValuesOrMerchandiseAmount,
      loggedIn: 'true',
+     disconnected: 'false',
      lastUpdate: '0'
 
 }, (err, res) => {
@@ -141,8 +142,116 @@ return true;
     // console.log("Databases:");
     // databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 };
+async function logPlayerOut(client, requestBody){
+   try {
+        // Connect to the MongoDB cluster
+        await client.connect();
+ 		const db = await client.db('game');
+	 const collection = await db.collection('userData');
+     
+	//var values =  await collection.find({email: '' + requestBody.email, password: '' + requestBody.password}, { projection: { _id: 0, email: 1, password: 1 } }).toArray();//, (err, item) => {
+
+   //await collection.find().forEach(function(data) {
+
+   //if (data.lastUpdate > 10){
+	var myquery = { email: '' + requestBody.email, password: '' + requestBody.password};
+  var newvalues = {$set: {disconnected: "false", loggedIn: "false", lastUpdate: "0" } };
+  await collection.updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(res.result.nModified + " document(s) updated");
+    //db.close();
+  });
+
+   
 
 
+ // }
+//}
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+
+};
+async function updateConnectionPoll(client, requestBody){
+//const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	//const client = new MongoClient(uri);
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect();
+ 		const db = await client.db('game');
+	 const collection = await db.collection('userData');
+     
+	//var values =  await collection.find({email: '' + requestBody.email, password: '' + requestBody.password}, { projection: { _id: 0, email: 1, password: 1 } }).toArray();//, (err, item) => {
+
+   //await collection.find().forEach(function(data) {
+
+   //if (data.lastUpdate > 10){
+	var myquery = { email: '' + requestBody.email, password: '' + requestBody.password};
+  var newvalues = {$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+  await collection.updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(res.result.nModified + " document(s) updated");
+    //db.close();
+  });
+
+   
+
+
+ // }
+//}
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+};
+
+ function updateLastTimeLoggedIn(){
+
+const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	const client = new MongoClient(uri);
+    try {
+        // Connect to the MongoDB cluster
+         client.connect();
+ 		const db =  client.db('game');
+	 const collection =  db.collection('userData');
+        // Make the appropriate DB calls
+        //await  listDatabases(client);
+
+       collection.find().forEach(function(data) { 
+  var myquery = { loggedIn: "true" };
+  var newvalues = {$set: {lastUpdate: (parseInt(data.lastUpdate) + 1).toString()} };
+   collection.updateMany(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(res.result.nModified + " document(s) updated");
+    //db.close();
+  });
+}
+    collection.find().forEach(function(data) {
+
+   if (data.lastUpdate > 10){
+	var myquery = { disconnected: "false" };
+  var newvalues = {$set: {disconnected: "true"} };
+   collection.updateMany(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(res.result.nModified + " document(s) updated");
+    //db.close();
+  });
+
+   
+
+
+  }
+}
+    } catch (e) {
+        console.error(e);
+    } finally {
+         client.close();
+    }
+
+}
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/goodbye', (req, res) => res.send('Goodbye World!'))
@@ -199,8 +308,80 @@ app.post('/signup', async (req, res) => {
     }
     res.send(responseString);
 })
+
+app.post('/connectionpoll', async (req, res) => {
+
+	const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	const client = new MongoClient(uri);
+	var responseString = "Error Somewhere";
+	 try {
+        // Connect to the MongoDB cluster
+        await client.connect();
+ 		await updateConnectionPoll(client, req);
+        // Make the appropriate DB calls
+       // await  listDatabases(client);
+ 		//var isEmail = await verifyEmail(client, req.body.email);
+
+ 		// if (isEmail) {
+ 		// 	responseString = "Email Already Exists";
+ 		// } else {
+ 		// 	responseString = "Email checked, problem signing up";
+ 		// 	var isSignupGood = await attemptToSignUp(client, req.body, "None");
+ 		// 	if (isSignupGood){
+ 		// 		responseString = "OK";
+ 		// 	}
+ 		// }
+		responseString = "OK"
+
+
+    } catch (e) {
+        console.error(e);
+        responseString = "ERROR"
+    } finally {
+
+        await client.close();
+    }
+    res.send(responseString);
+})
+app.post('/logout', async (req, res) => {
+const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	const client = new MongoClient(uri);
+	var responseString = "Error Somewhere";
+	 try {
+        // Connect to the MongoDB cluster
+        await client.connect();
+ 		await logPlayerOut(client,req);
+        // Make the appropriate DB calls
+       // await  listDatabases(client);
+ 		//var isEmail = await verifyEmail(client, req.body.email);
+
+ 		// if (isEmail) {
+ 		// 	responseString = "Email Already Exists";
+ 		// } else {
+ 		// 	responseString = "Email checked, problem signing up";
+ 		// 	var isSignupGood = await attemptToSignUp(client, req.body, "None");
+ 		// 	if (isSignupGood){
+ 		// 		responseString = "OK";
+ 		// 	}
+ 		// }
+		responseString = "OK"
+
+
+    } catch (e) {
+        console.error(e);
+        responseString = "ERROR"
+    } finally {
+
+        await client.close();
+    }
+    res.send(responseString);
+
+})
 app.listen(port, () => {
 
 	console.log(`Example app listening at http://localhost:${port}`)
 	main().catch(console.error);
+
+	setInterval(updateLastTimeLoggedIn, 1000);
+
 })
