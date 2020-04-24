@@ -2,7 +2,7 @@
 var crypto = require('crypto'),
   //algorithm = 'aes-256-gcm',
   algorithm = 'aes-256-cbc',
-  password = 'ABCDEFGHJKLMNOPQRSTUVWXY',//ZABCDEFG',
+  password = 'ABCDEFGHJKLMNOPQRSTUVWXYABCDEFGHJKLMNOPQRSTUVWXY',//ZABCDEFG',
   // do not use a global iv for production, 
   // generate a new one for each encryption
   iv = 'ABCDEFGHIJKLMNOP'
