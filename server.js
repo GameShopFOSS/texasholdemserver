@@ -208,33 +208,33 @@ async function updateConnectionPoll(client, requestBody){
     }
 };
 
- function updateLastTimeLoggedIn(){
+ async function updateLastTimeLoggedIn(){
 
 const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
 	const client = new MongoClient(uri);
     try {
         // Connect to the MongoDB cluster
-         client.connect();
- 		const db =  client.db('game');
-	 const collection =  db.collection('userData');
+         await client.connect();
+ 		const db =  await client.db('game');
+	 const collection =  await db.collection('userData');
         // Make the appropriate DB calls
         //await  listDatabases(client);
 
-       collection.find().forEach(function(data) { 
+       await collection.find().forEach(function(data) { 
   var myquery = { loggedIn: "true" };
   var newvalues = {$set: {lastUpdate: (parseInt(data.lastUpdate) + 1).toString()} };
-   collection.updateMany(myquery, newvalues, function(err, res) {
+   await collection.updateMany(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(res.result.nModified + " document(s) updated");
     //db.close();
   });
 });
-    collection.find().forEach(function(data) {
+    await collection.find().forEach(function(data) {
 
    if (data.lastUpdate > 10){
 	var myquery = { disconnected: "false" };
   var newvalues = {$set: {disconnected: "true"} };
-   collection.updateMany(myquery, newvalues, function(err, res) {
+  await collection.updateMany(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(res.result.nModified + " document(s) updated");
     //db.close();
@@ -248,10 +248,11 @@ const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.
     } catch (e) {
         console.error(e);
     } finally {
-         client.close();
+        await client.close();
+        setTimeout(updateLastTimeLoggedIn, 1000);
     }
 
-}
+};
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/goodbye', (req, res) => res.send('Goodbye World!'))
@@ -382,6 +383,6 @@ app.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`)
 	main().catch(console.error);
 
-	setInterval(updateLastTimeLoggedIn, 1000);
+	setTimeout(updateLastTimeLoggedIn, 1000);
 
 })
