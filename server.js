@@ -320,8 +320,8 @@ app.post('/signup', async (req, res) => {
 
 app.post('/connectionpoll', async (req, res) => {
 
-	const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
-	const client = new MongoClient(uri);
+	// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	// const client = new MongoClient(uri);
 	var responseString = "Error Somewhere";
 	 try {
         // Connect to the MongoDB cluster
@@ -354,8 +354,8 @@ app.post('/connectionpoll', async (req, res) => {
     res.send(responseString);
 })
 app.post('/logout', async (req, res) => {
-const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
-	const client = new MongoClient(uri);
+// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+// 	const client = new MongoClient(uri);
 	var responseString = "Error Somewhere";
 	 try {
         // Connect to the MongoDB cluster
@@ -392,6 +392,10 @@ const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.
 process.on('SIGTERM', shutDown);
 process.on('SIGINT', shutDown);
 
+let connections = [];
+
+
+
 const server = app.listen(port, () => {
 
 	console.log(`Example app listening at http://localhost:${port}`);
@@ -402,6 +406,12 @@ const server = app.listen(port, () => {
 	setTimeout(updateLastTimeLoggedIn, 1000);
 
 })
+
+
+server.on('connection', connection => {
+    connections.push(connection);
+    connection.on('close', () => connections = connections.filter(curr => curr !== connection));
+});
 
 function shutDown() {
     console.log('Received kill signal, shutting down gracefully');
