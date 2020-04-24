@@ -91,8 +91,9 @@ async function attemptToSignUp(client, requestBody, vipLevel){
     }
 
   const db = await client.db('game');
+  try{
   const collection = await db.collection('userData');
- var userInsert =  await collection.insert(
+   await collection.insertOne(
  	{email: '' + requestBody.email,
  	  firstname: '' + requestBody.firstname,
 	lastname:'' + requestBody.lastname,
@@ -107,7 +108,13 @@ async function attemptToSignUp(client, requestBody, vipLevel){
      loggedIn: 'true',
      lastUpdate: '0'
 
-}).toArray();//, (err, result) => {
+});
+} catch(e) {
+	console.log(e);
+	return false;
+}
+return true;
+//, (err, result) => {
 // if (result){
 // 		console.log(result);
 // 		return result;
@@ -117,11 +124,11 @@ async function attemptToSignUp(client, requestBody, vipLevel){
 // 	 	return "";
 //}).toArray();
 
- if (userInsert.length > 0){
-	 	return true;
-	 }
+//  if (userInsert.length > 0){
+// 	 	return true;
+// 	 }
 
-return false;
+// return false;
  
     // console.log("Databases:");
     // databasesList.databases.forEach(db => console.log(` - ${db.name}`));
