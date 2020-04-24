@@ -57,7 +57,7 @@ async function listDatabases(client){
 async function verifyEmail(client, email){
 	 const db = await client.db('game');
 	 const collection = await db.collection('userData');
-	var emailAddress =  await collection.find({name: '' + email});//, (err, item) => {
+	var emailAddress =  await collection.find({email: '' + email}, { projection: { _id: 0, email: 1 } }).toArray();//, (err, item) => {
 	 // 	if (item){
 		// console.log(item);
 		// return item;
