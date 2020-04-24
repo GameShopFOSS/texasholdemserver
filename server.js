@@ -57,18 +57,18 @@ async function listDatabases(client){
 async function verifyEmail(client, email){
 	 const db = await client.db('game');
 	 const collection = await db.collection('userData');
-	const emailAddress = await collection.findOne({name: '' + email}, (err, item) => {
-	 	if (item){
-		console.log(item);
-		return item;
-	 	} else {
-	 		console.log("no matching email address");
-	 	}
-	 	return "";
+	var emailAddress = await collection.findOne({name: '' + email}, (err, item) => {
+	 // 	if (item){
+		// console.log(item);
+		// return item;
+	 // 	} else {
+	 // 		console.log("no matching email address");
+	 // 	}
+	 // 	return "";
   
-});
+}).toArray();
 
-	 if (emailAddress != ""){
+	 if (emailAddress.length > 0){
 	 	return true;
 	 }
 
@@ -108,16 +108,16 @@ async function attemptToSignUp(client, requestBody, vipLevel){
      lastUpdate: '0'
 
 }, (err, result) => {
-if (result){
-		console.log(result);
-		return result;
-	 	} else {
-	 		console.log("failed");
-	 	}
-	 	return "";
-});
+// if (result){
+// 		console.log(result);
+// 		return result;
+// 	 	} else {
+// 	 		console.log("failed");
+// 	 	}
+// 	 	return "";
+}).toArray();
 
- if (userInsert != ""){
+ if (userInsert.length > 0){
 	 	return true;
 	 }
 
@@ -168,7 +168,7 @@ app.post('/signup', async (req, res) => {
  		if (isEmail) {
  			responseString = "Email Already Exists";
  		} else {
- 			responseString = "Email verified, problem signing up";
+ 			responseString = "Email checked, problem signing up";
  			var isSignupGood = await attemptToSignUp(client, req.body, "None");
  			if (isSignupGood){
  				responseString = "OK";
