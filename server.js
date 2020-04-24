@@ -85,7 +85,7 @@ async function attemptToSignUp(client, requestBody, vipLevel){
     var giftValuesOrMerchandiseAmount = "0";
 
     if (vipLevel == "None") {
-    	chips = "0";
+    	chips = "6000";
 	 hasReceivedTierBonus = "false";
      hasReceivedPurchaseBonus = "false";
      giftValuesOrMerchandiseAmount = "0";
@@ -188,7 +188,7 @@ async function updateConnectionPoll(client, requestBody){
    //await collection.find().forEach(function(data) {
 
    //if (data.lastUpdate > 10){
-	var myquery = { email: '' + requestBody.email, password: '' + requestBody.password};
+	var myquery = { email: "" + requestBody.email, password: "" + requestBody.password};
   var newvalues = {$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
   await collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
