@@ -8,8 +8,8 @@ var crypto = require('crypto'),
 
 class EncryptionService{
 
-constructor() {
-  
+EncryptionService() {
+
 }
  encrypt(text) {
   var cipher = crypto.createCipheriv(algorithm, password, iv)
