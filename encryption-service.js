@@ -24,7 +24,7 @@ constructor() {
 
  decrypt(encrypted) {
   var decipher = crypto.createDecipheriv(algorithm, password, iv)
-  decipher.setAuthTag(encrypted.tag);
+  //decipher.setAuthTag(encrypted.tag);
   var dec = decipher.update(encrypted.content, 'hex', 'utf8')
   dec += decipher.final('utf8');
   return dec;
