@@ -228,7 +228,7 @@ const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.
     console.log(res.result.nModified + " document(s) updated");
     //db.close();
   });
-}
+});
     collection.find().forEach(function(data) {
 
    if (data.lastUpdate > 10){
