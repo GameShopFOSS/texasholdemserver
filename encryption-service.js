@@ -33,7 +33,7 @@ constructor() {
   //var tag = cipher.getAuthTag();
   //decipher.setAuthTag(tag);
 
-  var dec = decipher.update(encrypted, 'hex', 'utf8');//.encrypted.content
+  var dec = decipher.update(encrypted, 'base64', 'utf8');//.encrypted.content
   dec += decipher.final('utf8');
   return dec;
 }
