@@ -4,7 +4,7 @@ const {MongoClient} = require('mongodb');
 var bodyParser = require('body-parser');
 
 //const http = require('http');
-const {EncryptionService} = require('./encryption-service');
+const EncryptionService = require('./encryption-service').EncryptionService;
 var encryptionService = new EncryptionService();
 const hostname = '127.0.0.1';
 const port = 8080;
