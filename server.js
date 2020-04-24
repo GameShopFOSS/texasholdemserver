@@ -94,7 +94,7 @@ async function attemptToSignUp(client, requestBody, vipLevel){
   const db = await client.db('game');
   try{
   const collection = await db.collection('userData');
-  var resultOfInsert = await collection.insertOne(
+   await collection.insertOne(
  	{email: '' + requestBody.email,
  	  firstname: '' + requestBody.firstname,
 	lastname:'' + requestBody.lastname,
@@ -109,7 +109,12 @@ async function attemptToSignUp(client, requestBody, vipLevel){
      loggedIn: 'true',
      lastUpdate: '0'
 
-});
+}, (err, res) => {
+    if (err) throw err;
+    console.log("1 document inserted");
+    //db.close();
+  });
+
    console.log(resultOfInsert);
 } catch(e) {
 	console.log(e);
