@@ -57,7 +57,7 @@ async function listDatabases(client){
 async function verifyEmail(client, email){
 	 const db = await client.db('game');
 	 const collection = await db.collection('userData');
-	var emailAddress =  await collection.findOne({name: '' + email}).pretty();//, (err, item) => {
+	var emailAddress =  await collection.find({name: '' + email}).pretty();//, (err, item) => {
 	 // 	if (item){
 		// console.log(item);
 		// return item;
@@ -67,6 +67,7 @@ async function verifyEmail(client, email){
 	 // 	return "";
   
 //}).toArray();
+console.log(emailAddress);
    console.log(emailAddress.length);
 	 if (emailAddress.length > 0){
 	 	return true;
