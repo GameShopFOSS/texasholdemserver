@@ -2,7 +2,7 @@
 var crypto = require('crypto'),
   //algorithm = 'aes-256-gcm',
   algorithm = 'aes-256-cbc',
-  password = 'ABCDEFGHJKLMNOPQRSTUVWXYABCDEFGHJKLMNOPQRSTUVWXY',//ZABCDEFG',
+  password = 'ABCDEFGHJKLMNOPQRSTUVWXYZABCDEFG',
   // do not use a global iv for production, 
   // generate a new one for each encryption
   iv = 'ABCDEFGHIJKLMNOP'
@@ -24,6 +24,7 @@ constructor() {
 }
 
  decrypt(encrypted) {
+  //var key = crypto.createHash('sha256').update(String(password)).digest('base64').substr(0, 32);
   var decipher = crypto.createDecipheriv(algorithm, password, iv);
   //decipher.setAuthTag(encrypted.tag);
 //     var cipher = crypto.createCipheriv(algorithm, password, iv);
