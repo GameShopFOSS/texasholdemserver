@@ -13,7 +13,7 @@ constructor() {
 }
  encrypt(text) {
   var cipher = crypto.createCipheriv(algorithm, password, iv)
-  var encrypted = cipher.update(text, 'utf8', 'hex')
+  var encrypted = cipher.update(text, 'utf8', 'hex');
   encrypted += cipher.final('hex');
   var tag = cipher.getAuthTag();
   return {
@@ -23,8 +23,14 @@ constructor() {
 }
 
  decrypt(encrypted) {
-  var decipher = crypto.createDecipheriv(algorithm, password, iv)
+  var decipher = crypto.createDecipheriv(algorithm, password, iv);
   //decipher.setAuthTag(encrypted.tag);
+    var cipher = crypto.createCipheriv(algorithm, password, iv);
+var encryptedC = cipher.update(text, 'utf8', 'hex');
+  encryptedC += cipher.final('hex');
+  var tag = cipher.getAuthTag();
+  decipher.setAuthTag(tag);
+
   var dec = decipher.update(encrypted, 'hex', 'utf8');//.encrypted.content
   dec += decipher.final('utf8');
   return dec;
