@@ -4,7 +4,7 @@ const {MongoClient} = require('mongodb');
 var bodyParser = require('body-parser');
 
 //const http = require('http');
-const {Encryption} = require('./encryption-service');
+const {EncryptionService} = require('./encryption-service');
 const hostname = '127.0.0.1';
 const port = 8080;
 app.use(bodyParser.json()); // support json encoded bodies
@@ -56,7 +56,7 @@ async function listDatabases(client){
 app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/goodbye', (req, res) => res.send('Goodbye World!'))
 app.post('/encryptionTest', (req, res) => {
-	var encryptionService = new Encryption();
+	var encryptionService = new EncryptionService();
 	var decryptedString = encryptionService.decrypt(req.body.encryptedString);
 
 	res.send(decryptedString);
