@@ -244,7 +244,7 @@ const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.
 
 
   }
-}
+});
     } catch (e) {
         console.error(e);
     } finally {
