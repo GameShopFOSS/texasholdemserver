@@ -4,7 +4,7 @@ const {MongoClient} = require('mongodb');
 var bodyParser = require('body-parser');
 
 //const http = require('http');
-const {Encryption} = require('./EncryptionService');
+const {Encryption} = require('./encryption-service');
 const hostname = '127.0.0.1';
 const port = 8080;
 app.use(bodyParser.json()); // support json encoded bodies
