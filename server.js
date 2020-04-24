@@ -57,7 +57,7 @@ async function listDatabases(client){
 async function verifyEmail(client, email){
 	 const db = await client.db('game');
 	 const collection = await db.collection('userData');
-	var emailAddress =  await collection.find({name: '' + email}).toArray();//, (err, item) => {
+	var emailAddress =  await collection.findOne({name: '' + email}).pretty();//, (err, item) => {
 	 // 	if (item){
 		// console.log(item);
 		// return item;
@@ -93,7 +93,7 @@ async function attemptToSignUp(client, requestBody, vipLevel){
   const db = await client.db('game');
   try{
   const collection = await db.collection('userData');
-   await collection.insertOne(
+  var resultOfInsert = await collection.insertOne(
  	{email: '' + requestBody.email,
  	  firstname: '' + requestBody.firstname,
 	lastname:'' + requestBody.lastname,
@@ -108,9 +108,11 @@ async function attemptToSignUp(client, requestBody, vipLevel){
      loggedIn: 'true',
      lastUpdate: '0'
 
-});
+}).pretty();
+   console.log(resultOfInsert);
 } catch(e) {
 	console.log(e);
+
 	return false;
 }
 return true;
