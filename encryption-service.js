@@ -8,7 +8,7 @@ var crypto = require('crypto'),
 
 class EncryptionService{
 
-EncryptionService() {
+constructor() {
 
 }
  encrypt(text) {
