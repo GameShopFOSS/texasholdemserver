@@ -223,7 +223,7 @@ const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.
        await collection.find().forEach(function(data) { 
   var myquery = { loggedIn: "true" };
   var newvalues = {$set: {lastUpdate: (parseInt(data.lastUpdate) + 1).toString()} };
-   await collection.updateMany(myquery, newvalues, function(err, res) {
+    collection.updateMany(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(res.result.nModified + " document(s) updated");
     //db.close();
@@ -234,7 +234,7 @@ const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.
    if (data.lastUpdate > 10){
 	var myquery = { disconnected: "false" };
   var newvalues = {$set: {disconnected: "true"} };
-  await collection.updateMany(myquery, newvalues, function(err, res) {
+   collection.updateMany(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(res.result.nModified + " document(s) updated");
     //db.close();
