@@ -1,12 +1,14 @@
 const express = require('express')
 const app = express()
 const {MongoClient} = require('mongodb');
+var bodyParser = require('body-parser');
 
 //const http = require('http');
-
+const {Encryption} = require('./EncryptionService');
 const hostname = '127.0.0.1';
 const port = 8080;
-
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // const server = http.createServer((req, res) => {
 //   res.statusCode = 200;
 //   res.setHeader('Content-Type', 'text/plain');
@@ -50,9 +52,15 @@ async function listDatabases(client){
     databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 };
  
- 
+
 app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/goodbye', (req, res) => res.send('Goodbye World!'))
+app.post('/encryptionTest', (req, res) => {
+	var decryptedString = Encryption.decrypt(req.body.encryptedString);
+
+	res.send(decryptedString);
+
+})
 app.listen(port, () => {
 
 	console.log(`Example app listening at http://localhost:${port}`)
