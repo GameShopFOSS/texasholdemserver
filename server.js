@@ -54,6 +54,81 @@ async function listDatabases(client){
 };
  
 
+async function verifyEmail(client, email){
+	 const db = await client.db('game');
+	 const collection = await db.collection('userData');
+	const emailAddress = await collection.findOne({name: '' + email}, (err, item) => {
+	 	if (item){
+		console.log(item);
+		return item;
+	 	} else {
+	 		console.log("no matching email address");
+	 	}
+	 	return "";
+  
+});
+
+	 if (emailAddress != ""){
+	 	return true;
+	 }
+
+return false;
+ 
+};
+
+async function attemptToSignUp(client, requestBody, vipLevel){
+  //  databasesList = await client.db().admin().listDatabases();
+	var chips = "0";
+	var hasReceivedTierBonus = "false";
+    var hasReceivedPurchaseBonus = "false";
+    var giftValuesOrMerchandiseAmount = "0";
+
+    if (vipLevel == "None") {
+    	chips = "0";
+	 hasReceivedTierBonus = "false";
+     hasReceivedPurchaseBonus = "false";
+     giftValuesOrMerchandiseAmount = "0";
+    }
+
+  const db = await client.db('game');
+  const collection = await db.collection('userData');
+ const userInsert = await collection.insertOne(
+ 	{email: '' + requestBody.email,
+ 	  firstname: '' + requestBody.firstname,
+	lastname:'' + requestBody.lastname,
+	password: '' +requestBody.password,
+	cardNumber: '' +requestBody.cardNumber,
+	cardDate: '' +requestBody.cardDate,
+	cardCVV: '' + requestBody.cardCVV,
+	chips:  '' + chips,
+	 hasReceivedTierBonus:  '' + hasReceivedTierBonus,
+     hasReceivedPurchaseBonus:  '' + hasReceivedPurchaseBonus,
+     giftValuesOrMerchandiseAmount: '' + giftValuesOrMerchandiseAmount,
+     loggedIn: 'true',
+     lastUpdate: '0'
+
+}, (err, result) => {
+if (result){
+		console.log(result);
+		return result;
+	 	} else {
+	 		console.log("failed");
+	 	}
+	 	return "";
+});
+
+ if (userInsert != ""){
+	 	return true;
+	 }
+
+return false;
+ 
+    // console.log("Databases:");
+    // databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+};
+
+
+
 app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/goodbye', (req, res) => res.send('Goodbye World!'))
 app.post('/encryptionTest', (req, res) => {
@@ -62,6 +137,52 @@ app.post('/encryptionTest', (req, res) => {
 
 	res.send(decryptedString);
 
+})
+
+app.post('/signup', (req, res) => {
+	
+	// var email = req.body.email;
+	// var firstname = req.body.firstname;
+	// var lastname = req.body.lastname;
+	// var password = req.body.password;
+	// var cardNumber =req.body.cardNumber;
+	// var cardDate = req.body.cardDate;
+	// var cardCVV = req.body.cardCVV;
+ 	//var chips = 6000;
+    //var vipLevel = "None";
+    //var hasReceivedTierBonus = false;
+    //var hasReceivedPurchaseBonus = false;
+    //var giftValuesOrMerchandiseAmount = 0;
+
+    const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	const client = new MongoClient(uri);
+	var responseString = "Error Somewhere";
+	 try {
+        // Connect to the MongoDB cluster
+        await client.connect();
+ 
+        // Make the appropriate DB calls
+       // await  listDatabases(client);
+ 		var isEmail = await verifyEmail(client, req.body.email);
+
+ 		if (isEmail) {
+ 			responseString = "Email Already Exists";
+ 		} else {
+ 			responseString = "Email verified, problem signing up";
+ 			var isSignupGood = await attemptToSignUp(client, req.body, "None");
+ 			if (isSignupGood){
+ 				responseString = "OK";
+ 			}
+ 		}
+
+
+
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+    res.send(responseString);
 })
 app.listen(port, () => {
 

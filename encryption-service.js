@@ -12,16 +12,16 @@ class EncryptionService{
 constructor() {
 
 }
- encrypt(text) {
-  var cipher = crypto.createCipheriv(algorithm, password, iv)
-  var encrypted = cipher.update(text, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  var tag = cipher.getAuthTag();
-  return {
-    content: encrypted,
-    tag: tag
-  };
-}
+//  encrypt(text) {
+//   var cipher = crypto.createCipheriv(algorithm, password, iv)
+//   var encrypted = cipher.update(text, 'utf8', 'hex');
+//   encrypted += cipher.final('hex');
+//   var tag = cipher.getAuthTag();
+//   return {
+//     content: encrypted,
+//     tag: tag
+//   };
+// }
 
  decrypt(encrypted) {
   //var key = crypto.createHash('sha256').update(String(password)).digest('base64').substr(0, 32);
