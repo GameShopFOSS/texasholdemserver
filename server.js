@@ -67,7 +67,7 @@ async function verifyEmail(client, email){
 	 // 	return "";
   
 //}).toArray();
-
+   console.log(emailAddress.length);
 	 if (emailAddress.length > 0){
 	 	return true;
 	 }
