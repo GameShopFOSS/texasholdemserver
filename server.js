@@ -8,6 +8,9 @@ const {EncryptionService} = require('./encryption-service.js');
 var encryptionService = new EncryptionService();
 const hostname = '127.0.0.1';
 const port = 8080;
+const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // const server = http.createServer((req, res) => {
@@ -19,42 +22,42 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // server.listen(port, hostname, () => {
 //   console.log(`Server running at http://${hostname}:${port}/`);
 // });
-async function main(){
-    /**
-     * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
-     * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
-     */
-    //const uri = "mongodb+srv://<username>:<password>@<your-cluster-url>/test?retryWrites=true&w=majority";
+// async function main(){
+//     /**
+//      * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
+//      * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
+//      */
+//     //const uri = "mongodb+srv://<username>:<password>@<your-cluster-url>/test?retryWrites=true&w=majority";
  
 
-    //const client = new MongoClient(uri);
- 	const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
-	const client = new MongoClient(uri);
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect();
+//     //const client = new MongoClient(uri);
+//  	const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+// 	const client = new MongoClient(uri);
+//     try {
+//         // Connect to the MongoDB cluster
+//         await client.connect();
  
-        // Make the appropriate DB calls
-        await  listDatabases(client);
+//         // Make the appropriate DB calls
+//         await  listDatabases(client);
  
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
-}
+//     } catch (e) {
+//         console.error(e);
+//     } finally {
+//         await client.close();
+//     }
+// }
 
 //main().catch(console.error);
 
-async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
+// async function listDatabases(client){
+//     databasesList = await client.db().admin().listDatabases();
  
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
+//     console.log("Databases:");
+//     databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+// };
  
 
-async function verifyEmail(client, email){
+async function verifyEmail(email){
 	 const db = await client.db('game');
 	 const collection = await db.collection('userData');
 	var emailAddress =  await collection.find({email: '' + email}, { projection: { _id: 0, email: 1 } }).toArray();//, (err, item) => {
@@ -77,7 +80,7 @@ return false;
  
 };
 
-async function attemptToSignUp(client, requestBody, vipLevel){
+async function attemptToSignUp(requestBody, vipLevel){
   //  databasesList = await client.db().admin().listDatabases();
 	var chips = "0";
 	var hasReceivedTierBonus = "false";
@@ -142,10 +145,10 @@ return true;
     // console.log("Databases:");
     // databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 };
-async function logPlayerOut(client, requestBody){
+async function logPlayerOut(requestBody){
    try {
         // Connect to the MongoDB cluster
-        await client.connect();
+        //await client.connect();
  		const db = await client.db('game');
 	 const collection = await db.collection('userData');
      
@@ -169,17 +172,19 @@ async function logPlayerOut(client, requestBody){
 //}
     } catch (e) {
         console.error(e);
-    } finally {
-        await client.close();
-    }
+    } 
+
+    // finally {
+    //     await client.close();
+    // }
 
 };
-async function updateConnectionPoll(client, requestBody){
+async function updateConnectionPoll(requestBody){
 //const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
 	//const client = new MongoClient(uri);
     try {
         // Connect to the MongoDB cluster
-        await client.connect();
+        //await client.connect();
  		const db = await client.db('game');
 	 const collection = await db.collection('userData');
      
@@ -203,18 +208,19 @@ async function updateConnectionPoll(client, requestBody){
 //}
     } catch (e) {
         console.error(e);
-    } finally {
-        await client.close();
-    }
+    } 
+    // finally {
+    //     await client.close();
+    // }
 };
 
  async function updateLastTimeLoggedIn(){
 
-const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
-	const client = new MongoClient(uri);
+// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+// 	const client = new MongoClient(uri);
     try {
         // Connect to the MongoDB cluster
-         await client.connect();
+         //await client.connect();
  		const db =  await client.db('game');
 	 const collection =  await db.collection('userData');
         // Make the appropriate DB calls
@@ -247,8 +253,9 @@ const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.
 });
     } catch (e) {
         console.error(e);
-    } finally {
-        await client.close();
+    } 
+    finally {
+    //    await client.close();
         setTimeout(updateLastTimeLoggedIn, 1000);
     }
 
@@ -279,12 +286,12 @@ app.post('/signup', async (req, res) => {
     //var hasReceivedPurchaseBonus = false;
     //var giftValuesOrMerchandiseAmount = 0;
 
-    const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
-	const client = new MongoClient(uri);
+ //    const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	// const client = new MongoClient(uri);
 	var responseString = "Error Somewhere";
 	 try {
         // Connect to the MongoDB cluster
-        await client.connect();
+      //  await client.connect();
  
         // Make the appropriate DB calls
        // await  listDatabases(client);
@@ -304,9 +311,10 @@ app.post('/signup', async (req, res) => {
 
     } catch (e) {
         console.error(e);
-    } finally {
-        await client.close();
     }
+    //  finally {
+    //     await client.close();
+    // }
     res.send(responseString);
 })
 
@@ -317,7 +325,7 @@ app.post('/connectionpoll', async (req, res) => {
 	var responseString = "Error Somewhere";
 	 try {
         // Connect to the MongoDB cluster
-        await client.connect();
+        //await client.connect();
  		await updateConnectionPoll(client, req);
         // Make the appropriate DB calls
        // await  listDatabases(client);
@@ -338,10 +346,11 @@ app.post('/connectionpoll', async (req, res) => {
     } catch (e) {
         console.error(e);
         responseString = "ERROR"
-    } finally {
+    } 
+    // finally {
 
-        await client.close();
-    }
+    //     await client.close();
+    // }
     res.send(responseString);
 })
 app.post('/logout', async (req, res) => {
@@ -350,7 +359,7 @@ const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.
 	var responseString = "Error Somewhere";
 	 try {
         // Connect to the MongoDB cluster
-        await client.connect();
+       // await client.connect();
  		await logPlayerOut(client,req);
         // Make the appropriate DB calls
        // await  listDatabases(client);
@@ -371,18 +380,42 @@ const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.
     } catch (e) {
         console.error(e);
         responseString = "ERROR"
-    } finally {
+    } 
+    // finally {
 
-        await client.close();
-    }
+    //     await client.close();
+    // }
     res.send(responseString);
 
 })
-app.listen(port, () => {
 
-	console.log(`Example app listening at http://localhost:${port}`)
-	main().catch(console.error);
+process.on('SIGTERM', shutDown);
+process.on('SIGINT', shutDown);
+
+const server = app.listen(port, () => {
+
+	console.log(`Example app listening at http://localhost:${port}`);
+	client.connect();
+
+	//main().catch(console.error);
 
 	setTimeout(updateLastTimeLoggedIn, 1000);
 
 })
+
+function shutDown() {
+    console.log('Received kill signal, shutting down gracefully');
+    client.close();
+    server.close(() => {
+        console.log('Closed out remaining connections');
+        process.exit(0);
+    });
+
+    setTimeout(() => {
+        console.error('Could not close connections in time, forcefully shutting down');
+        process.exit(1);
+    }, 10000);
+
+    connections.forEach(curr => curr.end());
+    setTimeout(() => connections.forEach(curr => curr.destroy()), 5000);
+}
