@@ -8,7 +8,9 @@ var crypto = require('crypto'),
 
 class EncryptionService{
 
-
+constructor() {
+  
+}
  encrypt(text) {
   var cipher = crypto.createCipheriv(algorithm, password, iv)
   var encrypted = cipher.update(text, 'utf8', 'hex')
