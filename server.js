@@ -347,11 +347,11 @@ app.post('/connectionpoll', async (req, res) => {
 
 	// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
 	// const client = new MongoClient(uri);
-	var responseString = "Error Somewhere";
+	var responseString = {response: "error"};
 	 try {
         // Connect to the MongoDB cluster
         //await client.connect();
- 		responseString = (await updateConnectionPoll(req.body)).toString();
+ 		responseString = await updateConnectionPoll(req.body);
         // Make the appropriate DB calls
        // await  listDatabases(client);
  		//var isEmail = await verifyEmail(client, req.body.email);
@@ -370,13 +370,13 @@ app.post('/connectionpoll', async (req, res) => {
 
     } catch (e) {
         console.error(e);
-        responseString = "ERROR"
+        //responseString = "ERROR"
     } 
     // finally {
 
     //     await client.close();
     // }
-    res.send(responseString);
+    res.json(responseString);
 })
 app.post('/logout', async (req, res) => {
 // const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
