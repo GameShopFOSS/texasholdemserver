@@ -189,7 +189,9 @@ async function updateConnectionPoll(requestBody){
 	 const collection = await db.collection('userData');
      
 	//var values =  await collection.find({email: '' + requestBody.email, password: '' + requestBody.password}, { projection: { _id: 0, email: 1, password: 1 } }).toArray();//, (err, item) => {
-
+ //if (data.lastUpdate > 10){
+   	console.log(requestBody.email);
+   	console.log(requestBody.password);
    await collection.find().forEach(function(data) {
 
    //if (data.lastUpdate > 10){
