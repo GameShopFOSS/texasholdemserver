@@ -154,7 +154,8 @@ async function populateOnlineList(){
 	//const client = new MongoClient(uri);
 	var result = {response: "none"};
     try {
-   
+   const db = await client.db('game');
+	 const collection = await db.collection('userData');
 
 
 	result = await collection.find({gameScene: "Lobby", loggedIn: "true", disconnected: "false"}, { projection: { _id: 0, firstname: 1, lastname: 1, email: 1 } }).toArray();//, (err, item) => {
@@ -173,7 +174,8 @@ async function populateQueuesandGameRooms(){
 	var result = {response: "none"};
     try {
 
-
+const db = await client.db('game');
+	 const collection = await db.collection('userData');
 
 	//result = await collection.find({gameScene: "Lobby", loggedIn: "true", disconnected: "false"}, { projection: { _id: 0, firstname: 1, lastname: 1, email: 1 } }).toArray();//, (err, item) => {
 	
