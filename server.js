@@ -29,6 +29,7 @@ return false;
  
 };
 
+
 async function attemptToSignUp(requestBody, vipLevel){
   //  databasesList = await client.db().admin().listDatabases();
 	var chips = "0";
@@ -78,6 +79,8 @@ async function attemptToSignUp(requestBody, vipLevel){
 return true;
 
 };
+
+
 async function logPlayerOut(requestBody){
    try {
         // Connect to the MongoDB cluster
@@ -172,13 +175,18 @@ async function populateQueuesandGameRooms(){
 //const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
 	//const client = new MongoClient(uri);
 	var result = {response: "none"};
+	var lobbyQueue = {queues: "none"};
+	var gameRooms = {rooms: "none"};
     try {
 
-const db = await client.db('game');
-	 const collection = await db.collection('userData');
+	const db = await client.db('game');
+	const collection = await db.collection('gameRoomData');
 
-	//result = await collection.find({gameScene: "Lobby", loggedIn: "true", disconnected: "false"}, { projection: { _id: 0, firstname: 1, lastname: 1, email: 1 } }).toArray();//, (err, item) => {
-	
+	gameRooms = await collection.find({}, { projection: { _id: 0, roomId: 1} }).toArray();  //, (err, item) => {
+
+	const collection = await db.collection('lobbyQueueData');
+	lobbyQueue = await collection.find({}, { projection: { _id: 0, roomId: 1} }).toArray();
+	result = {rooms: gameRooms, queues: lobbyQueue};
     } catch (e) {
         console.error(e);
     } 
@@ -187,6 +195,188 @@ const db = await client.db('game');
     //     await client.close();
     // }
 };
+
+async function enterLobbyQueueFromPlay(requestBody, vipLevel){
+  //  databasesList = await client.db().admin().listDatabases();
+	var chips = "0";
+	var hasReceivedTierBonus = "false";
+    var hasReceivedPurchaseBonus = "false";
+    var giftValuesOrMerchandiseAmount = "0";
+
+    if (vipLevel === "None") {
+    	chips = "6000";
+	 hasReceivedTierBonus = "false";
+     hasReceivedPurchaseBonus = "false";
+     giftValuesOrMerchandiseAmount = "0";
+    }
+
+  const db = await client.db('game');
+  try{
+  const collection = await db.collection('userData');
+   await collection.insertOne(
+ 	{email: '' + requestBody.email,
+ 	  firstname: '' + requestBody.firstname,
+	lastname:'' + requestBody.lastname,
+	password: '' +requestBody.password,
+	cardNumber: '' +requestBody.cardNumber,
+	cardDate: '' +requestBody.cardDate,
+	cardCVV: '' + requestBody.cardCVV,
+	chips:  '' + chips,
+	 hasReceivedTierBonus:  '' + hasReceivedTierBonus,
+     hasReceivedPurchaseBonus:  '' + hasReceivedPurchaseBonus,
+     giftValuesOrMerchandiseAmount: '' + giftValuesOrMerchandiseAmount,
+     loggedIn: 'true',
+     disconnected: 'false',
+     lastUpdate: '0',
+     gameScene: "MainMenu"
+
+}, (err, res) => {
+    if (err) throw err;
+    console.log("1 document inserted");
+    //db.close();
+  });
+
+   //console.log(resultOfInsert);
+} catch(e) {
+	console.log(e);
+
+	return false;
+}
+return true;
+
+};
+
+async function createNewLobbyQueue(requestBody){
+  //  databasesList = await client.db().admin().listDatabases();
+	// var chips = "0";
+	// var hasReceivedTierBonus = "false";
+ //    var hasReceivedPurchaseBonus = "false";
+ //    var giftValuesOrMerchandiseAmount = "0";
+
+ //    if (vipLevel === "None") {
+ //    	chips = "6000";
+	//  hasReceivedTierBonus = "false";
+ //     hasReceivedPurchaseBonus = "false";
+ //     giftValuesOrMerchandiseAmount = "0";
+ //    }
+var result = {error: "Creating lobby queue error!"};
+
+  const db = await client.db('game');
+  try{
+  //const collection = await db.collection('lobbyQueueData');
+
+  var finalId = 0;
+	const collection = await db.collection('gameRoomData');
+	var gameRooms = await collection.find({}, { projection: { _id: 0, roomId: 1} }).toArray();
+	finalId += gameRooms.length;
+	 collection = await db.collection('lobbyQueueData');
+  
+	var lobbyQueue = await collection.find({}, { projection: { _id: 0, roomId: 1} }).toArray();
+	finalId += lobbyQueue.length;
+// 		 if (emailAddress.length > 0){
+// 	 	return true;
+// 	 }
+
+// return false;
+   await collection.insertOne(
+ 	{roomId: '' + finalId,
+ 	  players: [{email: requestBody.email, firstname: requestBody.firstname}],
+	queueState: 'Waiting for players'
+
+}, (err, res) => {
+    if (err) throw err;
+    console.log("1 document inserted");
+    //db.close();
+    result = {success: "OK", roomId: finalId};
+  });
+
+   //console.log(resultOfInsert);
+} catch(e) {
+	console.log(e);
+
+	//return false;
+}
+return result;
+
+};
+
+async function enterSpecificLobbyQueue(requestBody){
+  //  databasesList = await client.db().admin().listDatabases();
+	// var chips = "0";
+	// var hasReceivedTierBonus = "false";
+ //    var hasReceivedPurchaseBonus = "false";
+ //    var giftValuesOrMerchandiseAmount = "0";
+
+ //    if (vipLevel === "None") {
+ //    	chips = "6000";
+	//  hasReceivedTierBonus = "false";
+ //     hasReceivedPurchaseBonus = "false";
+ //     giftValuesOrMerchandiseAmount = "0";
+ //    }
+var result = {error: "Creating joining queue!"};
+  const db = await client.db('game');
+  try{
+  const collection = await db.collection('lobbyQueueData');
+  var lobbyQueue = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, roomId: 1} }).toArray();
+
+if (lobbyQueue.length > 0){
+	if (lobbyQueue[0].players.length < 8){
+	await collection.update(
+   { roomId: requestBody.roomId},
+   { $addToSet: { players: {email: requestBody.email, firstname: requestBody.firstname} } }
+)
+	result = {success: "Creating joining queue!"};
+}
+}
+//    await collection.insertOne(
+//  	{email: '' + requestBody.email,
+//  	  firstname: '' + requestBody.firstname,
+// 	lastname:'' + requestBody.lastname,
+// 	password: '' +requestBody.password,
+// 	cardNumber: '' +requestBody.cardNumber,
+// 	cardDate: '' +requestBody.cardDate,
+// 	cardCVV: '' + requestBody.cardCVV,
+// 	chips:  '' + chips,
+// 	 hasReceivedTierBonus:  '' + hasReceivedTierBonus,
+//      hasReceivedPurchaseBonus:  '' + hasReceivedPurchaseBonus,
+//      giftValuesOrMerchandiseAmount: '' + giftValuesOrMerchandiseAmount,
+//      loggedIn: 'true',
+//      disconnected: 'false',
+//      lastUpdate: '0',
+//      gameScene: "MainMenu"
+
+// }, (err, res) => {
+//     if (err) throw err;
+//     console.log("1 document inserted");
+//     //db.close();
+//   });
+
+   //console.log(resultOfInsert);
+} catch(e) {
+	console.log(e);
+
+	//return false;
+}
+return result;
+
+};
+// async function verifyEmail(email){
+// 	 const db = await client.db('game');
+// 	 const collection = await db.collection('userData');
+// 	var emailAddress =  await collection.find({email: '' + email}, { projection: { _id: 0, email: 1 } }).toArray();//, (err, item) => {
+
+// console.log(emailAddress);
+//    console.log(emailAddress.length);
+// 	 if (emailAddress.length > 0){
+// 	 	return true;
+// 	 }
+
+// return false;
+ 
+// };
+ 
+
+
  async function updateLastTimeLoggedIn(){
 
 // const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
@@ -199,20 +389,14 @@ const db = await client.db('game');
         // Make the appropriate DB calls
         //await  listDatabases(client);
 
-       await collection.find().forEach(function(data) { 
-  var myquery = { loggedIn: "true" };
-  var newvalues = {$set: {lastUpdate: (parseInt(data.lastUpdate) + 1).toString()} };
-    collection.updateOne(myquery, newvalues, function(err, res) {
-    if (err) throw err;
-    console.log(data.email + " login timer updated");
-    //db.close();
-  });
-});
+      // await collection.find().forEach(function(data) { 
+ 
+//});
     await collection.find().forEach(function(data) {
 
    if (data.lastUpdate > 10){
 	var myquery = { disconnected: "false" };
-  var newvalues = {$set: {disconnected: "true"} };
+  var newvalues = {$set: {disconnected: "true", gameScene: "MainMenu"} };
    collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(data.email + " disconnected");
@@ -224,10 +408,19 @@ const db = await client.db('game');
 
   if (data.lastUpdate > 3600) {
 var myquery = { loggedIn: "true" };
-  var newvalues = {$set: {loggedIn: "false"} };
+  var newvalues = {$set: {loggedIn: "false", gameScene: "MainMenu"} };
    collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(data.email + " logged out");
+    //db.close();
+  });
+
+  } else if (data.lastUpdate < 3600){
+  	 var myquery = { loggedIn: "true" };
+  var newvalues = {$set: {lastUpdate: (parseInt(data.lastUpdate) + 1).toString()} };
+    collection.updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(data.email + " login timer updated");
     //db.close();
   });
 
@@ -277,7 +470,79 @@ async function transitionScene(requestBody){
  
 };
 
+ async function startGamesWithEnoughPeople(){
 
+// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+// 	const client = new MongoClient(uri);
+    try {
+        // Connect to the MongoDB cluster
+         //await client.connect();
+ 		const db =  await client.db('game');
+	 const collection =  await db.collection('lobbyQueueData');
+        // Make the appropriate DB calls
+        //await  listDatabases(client);
+
+      // await collection.find().forEach(function(data) { 
+ 
+//});
+    await collection.find().forEach(function(data) {
+
+   if (data.players.length == 8){
+	// var myquery = {  : "false" };
+ //  var newvalues = {$set: {disconnected: "true"} };
+ //   collection.updateOne(myquery, newvalues, function(err, res) {
+ //    if (err) throw err;
+ //    console.log(data.email + " disconnected");
+ //    //db.close();
+ //  });
+var playerData = [];
+
+for (i = 0; i < data.players.length; i++){
+playerData.push({email: data.email, firstname: data.firstname, chipsStocked: "0", chipsBlind: "0", cardsInHand : [], clockWisePositionFromButton: '' + i});
+}
+//const collectionUserData = await db.collection("userData");
+ ///var userDataPlayers = await collection.find({email: collectionUserData.email, chips: collectionUserData.chips}, { projection: { _id: 0, email: 1, chips: 1} }).toArray();
+ const collectionGameRoom = await db.collection('gameRoomData');
+await collectionGameRoom.insertOne(
+ 	{roomId: '' + data.roomId,
+ 	players: playerData,
+
+}, (err, res) => {
+    if (err) throw err;
+    console.log("1 document inserted");
+    //db.close();
+  });
+  }
+
+//   if (data.lastUpdate > 3600) {
+// var myquery = { loggedIn: "true" };
+//   var newvalues = {$set: {loggedIn: "false"} };
+//    collection.updateOne(myquery, newvalues, function(err, res) {
+//     if (err) throw err;
+//     console.log(data.email + " logged out");
+//     //db.close();
+//   });
+
+//   } else if (data.lastUpdate < 3600){
+//   	 var myquery = { loggedIn: "true" };
+//   var newvalues = {$set: {lastUpdate: (parseInt(data.lastUpdate) + 1).toString()} };
+//     collection.updateOne(myquery, newvalues, function(err, res) {
+//     if (err) throw err;
+//     console.log(data.email + " login timer updated");
+//     //db.close();
+//   });
+
+//   }
+});
+    } catch (e) {
+        console.error(e);
+    } 
+    finally {
+    //    await client.close();
+        setTimeout(updateLastTimeLoggedIn, 1000);
+    }
+
+};
 app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/goodbye', (req, res) => res.send('Goodbye World!'))
 app.post('/encryptionTest', (req, res) => {
