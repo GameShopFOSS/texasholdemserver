@@ -235,7 +235,7 @@ async function updateConnectionPoll(requestBody){
   var newvalues = {$set: {lastUpdate: (parseInt(data.lastUpdate) + 1).toString()} };
     collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
-    console.log(data.email " login timer updated");
+    console.log(data.email + " login timer updated");
     //db.close();
   });
 });
