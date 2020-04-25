@@ -205,13 +205,15 @@ async function updateConnectionPoll(requestBody){
    collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(data.email + " refreshed");
-    result = {chips: data.chips, gameScene: data.gameScene};
+  
     //db.close();
   });
    //return data.game
+     //result = {chips: data.chips, gameScene: data.gameScene};
    });
 
-	//var gameScene =  await collection.find({email: '' + email}, { projection: { _id: 0, email: 1 } }).toArray();//, (err, item) => {
+
+	result = await collection.find({email: requestBody.email, password: requestBody.password}, { projection: { _id: 0, gameScene: 1, chips: 1 } }).toArray();//, (err, item) => {
 	 // 	if (item){
 		// console.log(item);
 		// return item;
