@@ -299,13 +299,13 @@ app.post('/signup', async (req, res) => {
  
         // Make the appropriate DB calls
        // await  listDatabases(client);
- 		var isEmail = await verifyEmail(client, req.body.email);
+ 		var isEmail = await verifyEmail(req.body.email);
 
  		if (isEmail) {
  			responseString = "Email Already Exists";
  		} else {
  			responseString = "Email checked, problem signing up";
- 			var isSignupGood = await attemptToSignUp(client, req.body, "None");
+ 			var isSignupGood = await attemptToSignUp(req.body, "None");
  			if (isSignupGood){
  				responseString = "OK";
  			}
@@ -330,7 +330,7 @@ app.post('/connectionpoll', async (req, res) => {
 	 try {
         // Connect to the MongoDB cluster
         //await client.connect();
- 		await updateConnectionPoll(req);
+ 		await updateConnectionPoll(req.body);
         // Make the appropriate DB calls
        // await  listDatabases(client);
  		//var isEmail = await verifyEmail(client, req.body.email);
@@ -364,7 +364,7 @@ app.post('/logout', async (req, res) => {
 	 try {
         // Connect to the MongoDB cluster
        // await client.connect();
- 		await logPlayerOut(req);
+ 		await logPlayerOut(req.body);
         // Make the appropriate DB calls
        // await  listDatabases(client);
  		//var isEmail = await verifyEmail(client, req.body.email);
