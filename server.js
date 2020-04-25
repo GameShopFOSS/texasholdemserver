@@ -265,13 +265,13 @@ async function transitionScene(requestBody){
   // });
 
 
-console.log(emailAddress);
-   console.log(emailAddress.length);
-	 if (emailAddress.length > 0){
-	 	return true;
-	 }
+// console.log(emailAddress);
+//    console.log(emailAddress.length);
+// 	 if (emailAddress.length > 0){
+// 	 	return true;
+// 	 }
 
-return false;
+// return false;
  
 };
 
