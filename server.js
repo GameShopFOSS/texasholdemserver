@@ -195,7 +195,7 @@ async function updateConnectionPoll(requestBody){
    //if (data.lastUpdate > 10){
 	var myquery = { email: requestBody.email, password: requestBody.password};
   var newvalues = {$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
-  await collection.updateOne(myquery, newvalues, function(err, res) {
+   collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(res.result.nModified + "  these document(s) updated");
     //db.close();
