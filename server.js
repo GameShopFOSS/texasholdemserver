@@ -130,7 +130,7 @@ async function updateConnectionPoll(requestBody){
   var newvalues = {$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
   await collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
-    console.log(data.email + " refreshed");
+    console.log(requestBody.email + " refreshed");
   
     //db.close();
   });
