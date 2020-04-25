@@ -253,7 +253,7 @@ async function transitionScene(requestBody){
    	console.log(requestBody.email);
    	console.log(requestBody.password);
 	var myquery = { email: requestBody.email, password: requestBody.password};
-  var newvalues = {gameScene: requestBody.destination};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+  var newvalues = {$set: {gameScene: requestBody.destination}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
    await collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(requestBody.email + " changed scene to " +  requestBody.destination);
