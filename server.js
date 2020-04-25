@@ -193,6 +193,8 @@ async function updateConnectionPoll(requestBody){
    await collection.find().forEach(function(data) {
 
    //if (data.lastUpdate > 10){
+   	console.log(requestBody.email);
+   	console.log(requestBody.password);
 	var myquery = { email: requestBody.email, password: requestBody.password};
   var newvalues = {$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
    collection.updateMany(myquery, newvalues, function(err, res) {
