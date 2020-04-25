@@ -190,7 +190,7 @@ async function updateConnectionPoll(requestBody){
      
 	//var values =  await collection.find({email: '' + requestBody.email, password: '' + requestBody.password}, { projection: { _id: 0, email: 1, password: 1 } }).toArray();//, (err, item) => {
 
-   //await collection.find().forEach(function(data) {
+   await collection.find().forEach(function(data) {
 
    //if (data.lastUpdate > 10){
 	var myquery = { email: requestBody.email, password: requestBody.password};
@@ -201,7 +201,7 @@ async function updateConnectionPoll(requestBody){
     //db.close();
   });
 
-   
+   });
 
 
  // }
