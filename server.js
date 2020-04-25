@@ -199,9 +199,9 @@ async function updateConnectionPoll(requestBody){
    	console.log(requestBody.password);
 	var myquery = { email: requestBody.email, password: requestBody.password};
   var newvalues = {$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
-   collection.updateMany(myquery, newvalues, function(err, res) {
+   collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
-    console.log(res.result.nModified + "  these document(s) updated");
+    console.log(data.email + " refreshed");
     //db.close();
   });
 
@@ -233,9 +233,9 @@ async function updateConnectionPoll(requestBody){
        await collection.find().forEach(function(data) { 
   var myquery = { loggedIn: "true" };
   var newvalues = {$set: {lastUpdate: (parseInt(data.lastUpdate) + 1).toString()} };
-    collection.updateMany(myquery, newvalues, function(err, res) {
+    collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
-    console.log(res.result.nModified + " document(s) updated");
+    console.log(data.email " login timer updated");
     //db.close();
   });
 });
@@ -244,9 +244,9 @@ async function updateConnectionPoll(requestBody){
    if (data.lastUpdate > 10){
 	var myquery = { disconnected: "false" };
   var newvalues = {$set: {disconnected: "true"} };
-   collection.updateMany(myquery, newvalues, function(err, res) {
+   collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
-    console.log(res.result.nModified + " document(s) updated");
+    console.log(data.email + " disconnected");
     //db.close();
   });
 
@@ -330,7 +330,7 @@ app.post('/connectionpoll', async (req, res) => {
 	 try {
         // Connect to the MongoDB cluster
         //await client.connect();
- 		await updateConnectionPoll(client, req);
+ 		await updateConnectionPoll(req);
         // Make the appropriate DB calls
        // await  listDatabases(client);
  		//var isEmail = await verifyEmail(client, req.body.email);
@@ -364,7 +364,7 @@ app.post('/logout', async (req, res) => {
 	 try {
         // Connect to the MongoDB cluster
        // await client.connect();
- 		await logPlayerOut(client,req);
+ 		await logPlayerOut(req);
         // Make the appropriate DB calls
        // await  listDatabases(client);
  		//var isEmail = await verifyEmail(client, req.body.email);
