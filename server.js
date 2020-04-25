@@ -247,22 +247,22 @@ async function transitionScene(requestBody){
 	
 
 
-  await collection.find().forEach(function(data) {
+  //await collection.find().forEach(function(data) {
 
    //if (data.lastUpdate > 10){
    	console.log(requestBody.email);
    	console.log(requestBody.password);
 	var myquery = { email: requestBody.email, password: requestBody.password};
   var newvalues = {gameScene: requestBody.destination};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
-   collection.updateOne(myquery, newvalues, function(err, res) {
+   await collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
-    console.log(data.email + " changed scene to " +  requestBody.destination);
+    console.log(requestBody.email + " changed scene to " +  requestBody.destination);
   
     //db.close();
   });
    //return data.game
      //result = {chips: data.chips, gameScene: data.gameScene};
-   });
+  // });
 
 
 console.log(emailAddress);
