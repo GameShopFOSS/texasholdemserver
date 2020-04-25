@@ -121,14 +121,14 @@ async function updateConnectionPoll(requestBody){
  //if (data.lastUpdate > 10){
    	console.log(requestBody.email);
    	console.log(requestBody.password);
-   await collection.find().forEach(function(data) {
+  // await collection.find().forEach(function(data) {
 
    //if (data.lastUpdate > 10){
    	console.log(requestBody.email);
    	console.log(requestBody.password);
 	var myquery = { email: requestBody.email, password: requestBody.password};
   var newvalues = {$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
-   collection.updateOne(myquery, newvalues, function(err, res) {
+  await collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(data.email + " refreshed");
   
@@ -136,7 +136,7 @@ async function updateConnectionPoll(requestBody){
   });
    //return data.game
      //result = {chips: data.chips, gameScene: data.gameScene};
-   });
+  // });
 
 
 	result = await collection.find({email: requestBody.email, password: requestBody.password}, { projection: { _id: 0, gameScene: 1, chips: 1 } }).toArray();//, (err, item) => {
