@@ -111,7 +111,8 @@ async function attemptToSignUp(requestBody, vipLevel){
      giftValuesOrMerchandiseAmount: '' + giftValuesOrMerchandiseAmount,
      loggedIn: 'true',
      disconnected: 'false',
-     lastUpdate: '0'
+     lastUpdate: '0',
+     gameScene: "MainMenu"
 
 }, (err, res) => {
     if (err) throw err;
@@ -182,12 +183,14 @@ async function logPlayerOut(requestBody){
 async function updateConnectionPoll(requestBody){
 //const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
 	//const client = new MongoClient(uri);
+	var result = {response: "none"};
     try {
         // Connect to the MongoDB cluster
         //await client.connect();
  		const db = await client.db('game');
 	 const collection = await db.collection('userData');
      
+
 	//var values =  await collection.find({email: '' + requestBody.email, password: '' + requestBody.password}, { projection: { _id: 0, email: 1, password: 1 } }).toArray();//, (err, item) => {
  //if (data.lastUpdate > 10){
    	console.log(requestBody.email);
@@ -202,17 +205,35 @@ async function updateConnectionPoll(requestBody){
    collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(data.email + " refreshed");
+    result = {chips: data.chips, gameScene: data.gameScene};
     //db.close();
   });
-
+   //return data.game
    });
 
+	//var gameScene =  await collection.find({email: '' + email}, { projection: { _id: 0, email: 1 } }).toArray();//, (err, item) => {
+	 // 	if (item){
+		// console.log(item);
+		// return item;
+	 // 	} else {
+	 // 		console.log("no matching email address");
+	 // 	}
+	 // 	return "";
+  
+//}).toArray();
+// console.log(emailAddress);
+//    console.log(emailAddress.length);
+// 	 if (emailAddress.length > 0){
+// 	 	return true;
+// 	 }
 
+// return false;
  // }
 //}
     } catch (e) {
         console.error(e);
     } 
+    return result;
     // finally {
     //     await client.close();
     // }
@@ -330,7 +351,7 @@ app.post('/connectionpoll', async (req, res) => {
 	 try {
         // Connect to the MongoDB cluster
         //await client.connect();
- 		await updateConnectionPoll(req.body);
+ 		responseString = (await updateConnectionPoll(req.body)).toString();
         // Make the appropriate DB calls
        // await  listDatabases(client);
  		//var isEmail = await verifyEmail(client, req.body.email);
@@ -344,7 +365,7 @@ app.post('/connectionpoll', async (req, res) => {
  		// 		responseString = "OK";
  		// 	}
  		// }
-		responseString = "OK"
+		//responseString = "OK"
 
 
     } catch (e) {
