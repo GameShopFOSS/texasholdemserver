@@ -382,7 +382,7 @@ return cards;
 shuffleTwoCards(deck){
 	var cards = deck;
 var firstRandom =  Math.floor(Math.random() * cards.length);
-var secondRandom =  differentRandom(Math.floor(Math.random() * cards.length);
+var secondRandom =  differentRandom(Math.floor(Math.random() * cards.length));
 var firstCopyCard = new Card(cards[firstRandom].rank, cards[firstRandom].suit);
 var secondCopyCard = new Card(cards[secondRandom].rank, cards[secondRandom].suit);
 
