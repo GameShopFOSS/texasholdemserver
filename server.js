@@ -33,6 +33,43 @@ return false;
  
 };
 
+async function getLobbyQueueState(req){
+	 const db = await client.db('game');
+	 const collection = await db.collection('lobbyQueueData');
+	var gameData =  await collection.find({roomId: '' + req.roomId}, { projection: { _id: 0, players: 1 } }).toArray();//, (err, item) => {
+
+		var result = {gameData: gameData};
+		return result;
+// console.log(emailAddress);
+//    console.log(emailAddress.length);
+// 	 if (emailAddress.length > 0){
+// 	 	return true;
+// 	 }
+
+// return false;
+ 
+};
+
+ 
+async function getGameRoomState(req){
+	 const db = await client.db('game');
+	 const collection = await db.collection('gameRoomData');
+	var gameData =  await collection.find({roomId: '' + req.roomId}, { projection: { _id: 0, players: 1,
+ 	
+ 	cardsInPlay: 1,
+ 	dealerState: 1
+  } }).toArray();//, (err, item) => {
+var result = {gameData: gameData};
+		return result;
+// console.log(emailAddress);
+//    console.log(emailAddress.length);
+// 	 if (emailAddress.length > 0){
+// 	 	return true;
+// 	 }
+
+// return false;
+ 
+};
 
 async function attemptToSignUp(requestBody, vipLevel){
   //  databasesList = await client.db().admin().listDatabases();
@@ -186,10 +223,22 @@ async function populateQueuesandGameRooms(){
 	const db = await client.db('game');
 	const collection = await db.collection('gameRoomData');
 
-	gameRooms = await collection.find({}, { projection: { _id: 0, roomId: 1} }).toArray();  //, (err, item) => {
+	gameRooms = await collection.find({}, { projection: { _id: 0, roomId: 1,  players: 1} }).toArray();  //, (err, item) => {
 
 	const collectionLobby = await db.collection('lobbyQueueData');
-	lobbyQueue = await collectionLobby.find({}, { projection: { _id: 0, roomId: 1} }).toArray();
+	lobbyQueue = await collectionLobby.find({}, { projection: { _id: 0, roomId: 1, players: {email: 1, firstname: 1}} }).toArray();
+ //    var updatedLobbyQueue = [];
+	// for (i = 0; i < lobbyQueue.length; i++){
+	// 	var updatedRoom = {};
+	// //	var updatedPlayers = [];
+	// //	updatedPlayers.
+	// 	var updatedPlayers = [];
+	// 	for (j = 0; j < lobbyQueue[i].players.length; j++){
+	// 	var newPlayer = {email: lobbyQueue[i].players[j].email, firstname: lobbyQueue[i].players[j].firstname } ;
+	// 	updatePlayers.push(newPlayer)
+	// 	}
+	// }
+
 	result = {rooms: gameRooms, queues: lobbyQueue};
     } catch (e) {
         console.error(e);
@@ -329,7 +378,7 @@ if (lobbyQueue.length > 0){
    { roomId: requestBody.roomId},
    { $addToSet: { players: {email: requestBody.email, firstname: requestBody.firstname} } }
 )
-	result = {success: "Creating joining queue!", roomId: requestBody.roomId};
+	result = {success: "OK", roomId: requestBody.roomId};
 }
 }
 //    await collection.insertOne(
@@ -394,7 +443,7 @@ if (gameRoomPlayerActions.length === 0) {
 	const collectionUserData = await db.collection('userData');
 	var userChips =  await collectionUserData.find({email: '' + actionObject.email}, { projection: { _id: 0, chips: 1 } }).toArray();
 
-	if (actionObject.action === "bet") {
+	if (actionObject.action === "call" || actionObject.action === "raise") {
 
 		var myquery = { email: actionObject.email, password: actionObject.password};
   var newvalues = {$set: { chips: '' + (parseInt(userChips.chips) - parseInt(actionObject.amount))}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
@@ -795,6 +844,105 @@ app.post('/populatequeueandgameroomlist', async (req, res) => {
     res.json(responseString);
 })
 
+app.post('/createnewlobbyqueue', async (req, res) => {
+
+	// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	// const client = new MongoClient(uri);
+	var responseString = {response: "error"};
+	 try {
+    
+         responseString = await createNewLobbyQueue(req);
+
+    } catch (e) {
+        console.error(e);
+        //responseString = "ERROR"
+    } 
+    // finally {
+
+    //     await client.close();
+    // }
+    res.json(responseString);
+})
+
+app.post('/enterspecificlobbyqueue', async (req, res) => {
+
+	// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	// const client = new MongoClient(uri);
+	var responseString = {response: "error"};
+	 try {
+    
+         responseString = await enterSpecificLobbyQueue(req);
+
+    } catch (e) {
+        console.error(e);
+        //responseString = "ERROR"
+    } 
+    // finally {
+
+    //     await client.close();
+    // }
+    res.json(responseString);
+})
+
+app.post('/getlobbyqueuestate', async (req, res) => {
+
+	// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	// const client = new MongoClient(uri);
+	var responseString = {response: "error"};
+	 try {
+    
+         responseString = await getLobbyQueueState(req);
+
+    } catch (e) {
+        console.error(e);
+        //responseString = "ERROR"
+    } 
+    // finally {
+
+    //     await client.close();
+    // }
+    res.json(responseString);
+})
+
+app.post('/getgameroomstate', async (req, res) => {
+
+	// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	// const client = new MongoClient(uri);
+	var responseString = {response: "error"};
+	 try {
+    
+         responseString = await getGameRoomState(req);
+
+    } catch (e) {
+        console.error(e);
+        //responseString = "ERROR"
+    } 
+    // finally {
+
+    //     await client.close();
+    // }
+    res.json(responseString);
+})
+
+app.post('/submitplayeraction', async (req, res) => {
+
+	// const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
+	// const client = new MongoClient(uri);
+	var responseString = {response: "error"};
+	 try {
+    
+         responseString = await submitplayeraction(req);
+
+    } catch (e) {
+        console.error(e);
+        //responseString = "ERROR"
+    } 
+    // finally {
+
+    //     await client.close();
+    // }
+    res.json(responseString);
+})
 
 app.post('/logout', async (req, res) => {
 // const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
