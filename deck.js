@@ -362,7 +362,7 @@ cards.push(new Card("Jack", "Diamonds"));
 cards.push(new Card("Queen", "Diamonds"));
 cards.push(new Card("King", "Diamonds"));
 var cardDeck = [];
-for (i = 0; i = cards.length, i++){
+for (i = 0; i = cards.length; i++){
 cardDeck.push(cards[i].getCard());
 }
 
@@ -401,7 +401,7 @@ var secondCopyCard = new Card(cards[secondRandom].rank, cards[secondRandom].suit
 removeCardFromPlay(deck, rank, suit) {
  var cards = deck;
 
- for(i = 0; i < cards.length, i++){
+ for(i = 0; i < cards.length; i++){
  	if(cards[i].rank === rank){
 
  		if (cards[i].suit === suit){
