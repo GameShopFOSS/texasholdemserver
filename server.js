@@ -405,7 +405,7 @@ if (gameRoomPlayerActions.length === 0) {
   	var aquery = { roomId: '' + actionObject.roomId};
   var anewvalues = {$set: { playerActions: actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
  
-  	await collection.updateOne(aquery, avalues, function(err, res) {
+  	 collection.updateOne(aquery, avalues, function(err, res) {
     if (err) throw err;
     console.log(actionObject.email + " changed scene to " +  actionObject.destination);
   	
@@ -421,9 +421,9 @@ if (gameRoomPlayerActions.length === 0) {
 //fold
 
 	var bquery = { roomId: '' + actionObject.roomId};
-  var bnewvalues = {$set: { playerActions: actionObject]}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+  var bnewvalues = {$set: { playerActions: actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
  
-  	await collection.updateOne(bquery, bvalues, function(err, res) {
+  	 collection.updateOne(bquery, bvalues, function(err, res) {
     if (err) throw err;
     console.log(actionObject.email +  " changed scene to " +  actionObject.destination);
   	
