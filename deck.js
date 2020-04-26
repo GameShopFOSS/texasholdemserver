@@ -215,85 +215,85 @@ return cardRank;
 }
 orderPlayedCards(cardsInPlay){
 	result = [];
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "Ace"){
 			result.push(cardsInPlay[i]);
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "King"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "Queen"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "Jack"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "10"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "9"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "8"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "7"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "6"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "5"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "4"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "3"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "2"){
 			result.push(cardsInPlay[i])
 		}
 	}
-	for(i = 0, i < 5, i++){
+	for(i = 0; i < 5; i++){
 		//cardsInPlay[i]
 		if(cardsInPlay[i].rank === "1"){
 			result.push(cardsInPlay[i])
