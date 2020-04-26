@@ -4,9 +4,9 @@ class Card{
 rank = "Ace";
 suit = "Spades";
 
-constructor(){
+// constructor(){
 	
-}
+// }
 
 constructor(suit, rank){
 
