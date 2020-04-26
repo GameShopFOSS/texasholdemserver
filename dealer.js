@@ -32,11 +32,11 @@ initializeDealerState(){
 consumePlayerActions(data) {
 
 		var gameRoom = data;
-		var default = false;
+		var dfault = false;
 		var currentTime = parseInt(gameRoom.dealerState.turnElapsedTime) + 1;
     	 if (currentTime > 30) {
-//fold or choose default action
-			default = true;
+//fold or choose dfault action
+			dfault = true;
     	 }
 
     	 //fold, call, raise
@@ -129,7 +129,7 @@ gameRoom.dealerState.playState = "preriver";
     	 gameRoom.deck = firstDeal.cards;
 gameRoom.dealerState.playState = "finalbet";
 	  	 } else if (data.dealerState.playState === "showdown"){
-    	 // 	if (default){
+    	 // 	if (dfault){
 
 	  	 	// } else {
 	  	 		
@@ -153,8 +153,8 @@ gameRoom.dealerState.playState = "finalbet";
 
 		if (!Array.isArray(data.playerActions)) {
 	  	 if (data.dealerState.playState === "smallblind"){ 
-	  	 	//bets, default bet
-	  	 	if (default){
+	  	 	//bets, dfault bet
+	  	 	if (dfault){
 	  	 		// if(data.playerActions.length >0){
 
 	  	 		// }
@@ -183,7 +183,7 @@ gameRoom.dealerState.playState = "finalbet";
 
     	 } else if (data.dealerState.playState === "bigblind"){
 
-    	 	if (default){
+    	 	if (dfault){
 //for (i = 0, i < 8, i++){
 	  	 		//	if (data.playerData[i].email === playerActions.email){
 	  	 			gameRoom.playerData[1].chipsBlind = "" + (parseInt(gameRoom.dealerState.currentBlind) * 2);	
@@ -199,7 +199,7 @@ gameRoom.dealerState.playState = "finalbet";
     	 }
     	  
     	 // else if (data.dealerState.playState === "dealflop"){
-    	 // 	if (default){
+    	 // 	if (dfault){
 
 	  	 	// } else {
 	  	 		
@@ -207,7 +207,7 @@ gameRoom.dealerState.playState = "finalbet";
     	 // } 
     	 	 else if (data.dealerState.playState === "preflop"){
     	 	
-    	 	if (default){
+    	 	if (dfault){
 //fold
 		gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 
@@ -229,7 +229,7 @@ gameRoom.dealerState.playState = "finalbet";
     	 	// if (parseInt(gameRoom.dealerState.playerTurn) == 0){
     	 	// 	gameRoom.dealerState.playState === "flop"
     	 	// }
-    	 	if (default){
+    	 	if (dfault){
 //fold
 		gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 
@@ -247,7 +247,7 @@ gameRoom.dealerState.playState = "finalbet";
     	 	}
     	 } 
     	 else if (data.dealerState.playState === "preriver"){
-    	 	if (default){
+    	 	if (dfault){
 //fold
 		gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 
@@ -264,7 +264,7 @@ gameRoom.dealerState.playState = "finalbet";
     	 		gameRoom.dealerState.playState === "river"
     	 	}
     	 }  else if (data.dealerState.playState === "finalbet"){
-    	 	if (default){
+    	 	if (dfault){
 //fold
 		gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 
@@ -283,13 +283,13 @@ gameRoom.dealerState.playState = "finalbet";
     	 }  
 
     	 else if (data.dealerState.playState === "scoring"){
-    	 	if (default){
+    	 	if (dfault){
 
 	  	 	} else {
 	  	 		
 	  	 	}
     	 } else if (data.dealerState.playState === "finish"){
-    	 	if (default){
+    	 	if (dfault){
 
 	  	 	} else {
 	  	 		
