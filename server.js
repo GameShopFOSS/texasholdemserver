@@ -6,6 +6,10 @@ var bodyParser = require('body-parser');
 //const http = require('http');
 const {EncryptionService} = require('./encryption-service.js');
 var encryptionService = new EncryptionService();
+
+const {Dealer} = require('./dealer.js');
+var dealer = new Dealer();
+
 const hostname = '127.0.0.1';
 const port = 8080;
 const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
@@ -287,7 +291,7 @@ var result = {error: "Creating lobby queue error!"};
     if (err) throw err;
     console.log("1 document inserted");
     //db.close();
-    result = {success: "OK", roomId: finalId};
+    result = {success: "OK", roomId: '' + finalId};
   });
 
    //console.log(resultOfInsert);
@@ -325,7 +329,7 @@ if (lobbyQueue.length > 0){
    { roomId: requestBody.roomId},
    { $addToSet: { players: {email: requestBody.email, firstname: requestBody.firstname} } }
 )
-	result = {success: "Creating joining queue!"};
+	result = {success: "Creating joining queue!", roomId: requestBody.roomId};
 }
 }
 //    await collection.insertOne(
@@ -374,10 +378,79 @@ return result;
 // return false;
  
 // };
- 
+async function submitPlayerAction(actionObject){
+try {
+        // Connect to the MongoDB cluster
+         //await client.connect();
 
+         //actionObject will have roomId
+//find all collections
+ 		const db =  await client.db('game');
+	 const collection =  await db.collection('gameRoomData');
+var gameRoomPlayerActions =  await collection.find({roomId: '' + actionObject.roomId}, { projection: { _id: 0, playerActions: 1 } }).toArray();
+
+if (gameRoomPlayerActions.length === 0){
+	const collectionUserData = await db.collection('userData');
+	var userChips =  await collectionUserData.find({email: '' + actionObject.email}, { projection: { _id: 0, chips: 1 } }).toArray();
+
+	if (actionObject.action === "bet"){
+
+		var myquery = { email: actionObject.email, password: actionObject.password};
+  var newvalues = {$set: { chips: '' + (parseInt(userChips.chips) - parseInt(actionObject.amount));}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+   await collectionUserData.updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(requestBody.email + " changed scene to " +  requestBody.destination);
+  
+    //db.close();
+  });
+
+		
+	}
+}
+	} catch(e){
+ 
+	}
+
+};
+ 
+async function gameLoop(){
+try {
+        // Connect to the MongoDB cluster
+         //await client.connect();
+ 		const db =  await client.db('game');
+	 const collection =  await db.collection('gameRoomData');
+        // Make the appropriate DB calls
+        //await  listDatabases(client);
+
+      // await collection.find().forEach(function(data) { 
+ 
+//});
+    await collection.find().forEach(function(data) {
+//smallblind, bigblind, flop, dealflop, playflop, turn, playturn, river, playriver, showdown, scoring, finish
+  
+  		var resultingRoom = dealer.consumePlayerActions(data);
+
+ //   if (data.lastUpdate > 10){
+	var myquery = { roomId: data.roomId};
+  var newvalues = {$set: resultingRoom };
+   collection.updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(data.roomId + " updated game room");
+    //db.close();
+  });
+
+
+
+});
+    } catch (e) {
+        console.error(e);
+    } 
+     
+};
 
  async function updateLastTimeLoggedIn(){
+	startGamesWithEnoughPeople();
+ 	gameLoop();
 
 // const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
 // 	const client = new MongoClient(uri);
@@ -500,13 +573,29 @@ var playerData = [];
 for (i = 0; i < data.players.length; i++){
 playerData.push({email: data.email, firstname: data.firstname, chipsStocked: "0", chipsBlind: "0", cardsInHand : [], clockWisePositionFromButton: '' + i});
 }
+
+
+
+//*********HERE******
+
+
+
+
+
+
 //const collectionUserData = await db.collection("userData");
  ///var userDataPlayers = await collection.find({email: collectionUserData.email, chips: collectionUserData.chips}, { projection: { _id: 0, email: 1, chips: 1} }).toArray();
  const collectionGameRoom = await db.collection('gameRoomData');
+ var startingDeck = dealer.getDeck().instantiateDeck();
+ startingDeck = dealer.getDeck().shuffle(startingDeck);
+ var startingDealerState = dealer.initializeDealerState();
 await collectionGameRoom.insertOne(
  	{roomId: '' + data.roomId,
  	players: playerData,
-
+ 	deck: startingDeck,
+ 	dealerState: startingDealerState,
+ 	playerActions: []//,
+ 	//turnElapsedTime: 0
 }, (err, res) => {
     if (err) throw err;
     console.log("1 document inserted");
@@ -537,10 +626,10 @@ await collectionGameRoom.insertOne(
     } catch (e) {
         console.error(e);
     } 
-    finally {
-    //    await client.close();
-        setTimeout(updateLastTimeLoggedIn, 1000);
-    }
+    // finally {
+    // //    await client.close();
+    //     setTimeout(updateLastTimeLoggedIn, 1000);
+    // }
 
 };
 app.get('/', (req, res) => res.send('Hello World!'))
