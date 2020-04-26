@@ -610,11 +610,11 @@ playerData.push({email: data.email, firstname: data.firstname, chipsStocked: "0"
 
 //const collectionUserData = await db.collection("userData");
  ///var userDataPlayers = await collection.find({email: collectionUserData.email, chips: collectionUserData.chips}, { projection: { _id: 0, email: 1, chips: 1} }).toArray();
- const collectionGameRoom = await db.collection('gameRoomData');
+ const collectionGameRoom =  db.collection('gameRoomData');
  var startingDeck = dealer.getDeck().instantiateDeck();
  startingDeck = dealer.getDeck().shuffle(startingDeck);
  var startingDealerState = dealer.initializeDealerState();
-await collectionGameRoom.insertOne(
+ collectionGameRoom.insertOne(
  	{roomId: '' + data.roomId,
  	players: playerData,
  	deck: startingDeck,
