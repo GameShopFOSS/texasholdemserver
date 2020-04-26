@@ -59,7 +59,7 @@ consumePlayerActions(data) {
     	 // gameRoom.cardsInPlay = [firstCard, secondCard, thirdCard];
     	  gameRoom.deck = getDeck().dealCard(burnedCardDeck.cards);
     	 //deal player cards
-    	 for (i = 0, i < 8, i++){
+    	 for (i = 0; i < 8; i++){
 	  	 			//if (data.playerData[i].email === data.playerActions.email){
 	  	 				var firstDealToPlayer = getDeck().dealCard(gameRoom.deck);
 	  	 				var firstCardToPlayer = firstDealToPlayer.dealt;
