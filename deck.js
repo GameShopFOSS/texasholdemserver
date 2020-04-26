@@ -10,8 +10,31 @@ constructor(){
 }
 
 addCardsAndRankThem(cardsInPlay, hand){
+var startingRank = rankCardsInPlay(cardsInPlay);
 
+	resultCards = cardsInPlay;
+	for (i = 0; i < cardsInPlay.length; i++){
 
+		if (hand[0].suit == cardsInPlay[i].suit){
+			if(cardRankResolverToValue(hand[0].rank) > cardRankResolverToValue(cardsInPlay[i].rank)){
+				resultCards[i] = cardsInPlay[i]
+				continue;
+			}
+
+		}
+if (hand[1].suit == cardsInPlay[i].suit){
+			if(cardRankResolverToValue(hand[1].rank) > cardRankResolverToValue(cardsInPlay[i].rank)){
+				resultCards[i] = cardsInPlay[i]
+			}
+
+		}
+	}	
+
+	var resultRank = rankCardsInPlay(cardsInPlay);
+	if (resultRank.value > startingRank.value){
+		return resultRank;
+	}
+	return startingRank;
 }
 rankCardsInPlay(cardsInPlay){
 	var result = {};

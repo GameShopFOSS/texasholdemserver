@@ -128,7 +128,27 @@ gameRoom.dealerState.playState = "preriver";
     	  gameRoom.cardsInPlay.push(firstCard); //= [firstCard, secondCard, thirdCard];
     	 gameRoom.deck = firstDeal.cards;
 gameRoom.dealerState.playState = "finalbet";
-	  	 }
+	  	 } else if (data.dealerState.playState === "showdown"){
+    	 // 	if (default){
+
+	  	 	// } else {
+	  	 		
+	  	 	// }
+	  	 	var currentValue = 0;
+	  	 	var winningPlayer = 0;
+	  	 	var currentRank = {};
+	  	 	for (i = 0; i < 8; i++){
+	  	 		if (gameRoom.playerData[i].cardsInHand.length > 0){
+
+	  	 			currentRank = addCardsAndRankThem(gameRoom.cardsInPlay, gameRoom.playerData[i].cardsInHand);
+	  	 			if (currentRank.value > currentValue) {
+	  	 				winningPlayer = i;
+	  	 			}
+	  	 		}
+	  	 		
+	  	 	}
+	  	 	
+    	 }
 
 
 		if (!Array.isArray(data.playerActions)) {
@@ -258,17 +278,11 @@ gameRoom.dealerState.playState = "finalbet";
 	  	 	}
 
 	  	 	if (parseInt(gameRoom.dealerState.playerTurn) == "7"){
-    	 		gameRoom.dealerState.playState === "river"
+    	 		gameRoom.dealerState.playState === "showdown"
     	 	}
     	 }  
 
-    	 else if (data.dealerState.playState === "showdown"){
-    	 // 	if (default){
-
-	  	 	// } else {
-	  	 		
-	  	 	// }
-    	 } else if (data.dealerState.playState === "scoring"){
+    	 else if (data.dealerState.playState === "scoring"){
     	 	if (default){
 
 	  	 	} else {
@@ -289,8 +303,8 @@ gameRoom.dealerState.playState = "finalbet";
     	}
     	}
 
-    	if(gameRoom.playerData[parseInt(gameRoom.dealerState.playerTurn)].cardsInHand){
-
+    	if(gameRoom.playerData[parseInt(gameRoom.dealerState.playerTurn)].cardsInHand.length == 0){
+gameRoom.dealerState.playerTurn = "" +parseInt(gameRoom.dealerState.playerTurn) + 1;
     	}
     	
     	  gameRoom.dealerState.turnElapsedTime = (currentTime).ToString();

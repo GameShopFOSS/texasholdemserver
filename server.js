@@ -620,7 +620,8 @@ await collectionGameRoom.insertOne(
  	deck: startingDeck,
  	cardsInPlay: [],
  	dealerState: startingDealerState,
- 	playerActions: []//,
+ 	playerActions: [],
+ 	winner: "none"//,
  	//turnElapsedTime: 0
 }, (err, res) => {
     if (err) throw err;
