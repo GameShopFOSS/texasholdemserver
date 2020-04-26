@@ -188,8 +188,8 @@ async function populateQueuesandGameRooms(){
 
 	gameRooms = await collection.find({}, { projection: { _id: 0, roomId: 1} }).toArray();  //, (err, item) => {
 
-	const collection = await db.collection('lobbyQueueData');
-	lobbyQueue = await collection.find({}, { projection: { _id: 0, roomId: 1} }).toArray();
+	const collectionLobby = await db.collection('lobbyQueueData');
+	lobbyQueue = await collectionLobby.find({}, { projection: { _id: 0, roomId: 1} }).toArray();
 	result = {rooms: gameRooms, queues: lobbyQueue};
     } catch (e) {
         console.error(e);
