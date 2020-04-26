@@ -9,6 +9,276 @@ constructor(){
 
 }
 
+addCardsAndRankThem(cardsInPlay, hand){
+
+
+}
+rankCardsInPlay(cardsInPlay){
+	var result = {};
+	// for(i = 0, i < 5, i++){
+	// 	//cardsInPlay[i]
+	// }
+
+	//var rank = 0;
+
+	var cards = orderPlayedCards(cardsInPlay);
+
+	//royalflush
+	if (cards[0].rank === "Ace" && cards[1].rank === "King" && cards[2].rank === "Queen" && cards[3].rank === "Jack" && cards[4].rank === "10"){
+		return result = {rating: "Royal Flush", value: 10};
+	}
+
+	for (i = 0; i < cards.length - 1; i++){
+
+		if (cards[i].suit != cards[i+1].suit){
+			break;
+		}
+
+		if ((cardRankResolverToValue(cards[i].rank) - cardRankResolverToValue(cards[i+1].rank)) != 1){
+			break;
+		}
+
+		return result = {rating: "Straight Flush", value: 9};
+	}
+	var match = 0;
+	for (i = 0; i < cards.length - 1; i++){
+
+		// if (cards[i].suit != cards[i+1].suit){
+		// 	break;
+		// }
+		
+		if (cards[i].rank == cards[i+1].rank){
+			match++;
+		}
+		if (match == 4){
+			return result = {rating: "Four of a Kind", value: 8};
+		}
+		
+	}
+	 match = 0;
+	for (i = 0; i < cards.length - 1; i++){
+
+		// if (cards[i].suit != cards[i+1].suit){
+		// 	break;
+		// }
+		
+		if (cards[i].rank == cards[i+1].rank){
+			match++;
+		}
+		if (match == 3){
+			match = 0;
+		}
+		if (cards[i].rank == cards[i+1].rank){
+			match++;
+		}
+		if (match == 2){
+		return result = {rating: "Full House", value: 7};	
+		}
+			//return result = {rating: "Four of a Kind", value: 8};
+	}
+
+	for (i = 0; i < cards.length - 1; i++){
+		if (cards[i].suit != cards[i+1].suit){
+			break;
+		}
+		return result = {rating: "Flush", value: 6};	
+	}
+
+	for (i = 0; i < cards.length - 1; i++){
+		
+
+		if ((cardRankResolverToValue(cards[i].rank) - cardRankResolverToValue(cards[i+1].rank)) != 1){
+			break;
+		}
+		return result = {rating: "Straight", value: 5};	
+	}
+
+if(cards[0].rank == "Ace"){
+
+for (i = 4; i > 1; i--) {
+
+		if ((cardRankResolverToValue(cards[i-1].rank) - cardRankResolverToValue(cards[i].rank)) != 1){
+			break;
+		}
+		return result = {rating: "Straight", value: 5};	
+	}
+		}
+		 match = 0;
+for (i = 0; i < cards.length - 1; i++){
+
+		// if (cards[i].suit != cards[i+1].suit){
+		// 	break;
+		// }
+		
+		if (cards[i].rank == cards[i+1].rank){
+			match++;
+		}
+		if (match == 3){
+			return result = {rating: "Three of a Kind", value: 4};
+		}
+		
+	}
+	 match = 0;
+	for (i = 0; i < cards.length - 1; i++){
+
+		// if (cards[i].suit != cards[i+1].suit){
+		// 	break;
+		// }
+		
+		if (cards[i].rank == cards[i+1].rank){
+			match++;
+		}
+		if (match == 2){
+			match = 0;
+		//	return result = {rating: "Three of a Kind", value: 4};
+		}
+		if (cards[i].rank == cards[i+1].rank){
+			match++;
+		}
+		if (match == 2){
+			match = 0;
+			return result = {rating: "Two Pair", value: 3};
+		}
+	}
+ match = 0;
+	for (i = 0; i < cards.length - 1; i++){
+
+		// if (cards[i].suit != cards[i+1].suit){
+		// 	break;
+		// }
+		
+		
+		if (cards[i].rank == cards[i+1].rank){
+			match++;
+		}
+		if (match == 2){
+			match = 0;
+			return result = {rating: "One Pair", value: 2};
+		}
+	}
+}
+cardValueResolverToRank(value){
+	var cardRank = "Ace";
+
+	if (value < 11){
+		cardRank = "" + value;
+	} else if (value === 11){
+		cardRank = "Jack";
+	}else if (value === 12){
+		cardRank = "Queen";
+	}else if (value === 13){
+		cardRank = "King";
+	}else if (value === 14){
+		cardRank ="Ace";
+	}
+
+	return cardRank;
+}
+cardRankResolverToValue(card){
+
+	var cardRank = 0;
+	if (card.rank === "Jack"){
+		cardRank = 11;
+	} else if (card.rank === "Queen") {
+		cardRank == 12;
+	} else if (card.rank === "King") {
+		cardRank == 13;
+	} else if (card.rank === "Ace") {
+		cardRank == 14;
+	}  else {
+		cardRank = parseInt(card.rank);
+	}
+return cardRank;
+}
+orderPlayedCards(cardsInPlay){
+	result = [];
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "Ace"){
+			result.push(cardsInPlay[i]);
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "King"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "Queen"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "Jack"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "10"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "9"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "8"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "7"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "6"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "5"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "4"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "3"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "2"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	for(i = 0, i < 5, i++){
+		//cardsInPlay[i]
+		if(cardsInPlay[i].rank === "1"){
+			result.push(cardsInPlay[i])
+		}
+	}
+	return result;
+}
+
 instantiateDeck(){
 
 var cards = [];

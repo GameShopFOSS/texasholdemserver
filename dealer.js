@@ -29,7 +29,7 @@ initializeDealerState(){
 
 }
 
-consumePlayerActions(data){
+consumePlayerActions(data) {
 
 		var gameRoom = data;
 		var default = false;
@@ -43,6 +43,39 @@ consumePlayerActions(data){
 
 //email: action : "bet", amount: 500
 //playerData.push({email: data.email, firstname: data.firstname, chipsStocked: "0", chipsBlind: "0", cardsInHand : [], clockWisePositionFromButton: '' + i});
+
+
+	if (data.dealerState.playState === "dealing"){
+    	 
+    	 gameRoom.dealerState.turnElapsedTime = 0;
+    	 var burnedCardDeck = getDeck().dealCard(data.deck);
+
+    	 // var firstDeal = getDeck().dealCard(burnedCardDeck.cards);
+    	 // var firstCard = firstDeal.dealt;
+    	 // var secondDeal = getDeck().dealCard(firstDeal.cards);
+    	 // var secondCard = secondDeal.dealt;
+    	 // var thirdDeal = getDeck().dealCard(secondDeal.cards);
+    	 // var thirdCard = thirdDeal.dealt;
+    	 // gameRoom.cardsInPlay = [firstCard, secondCard, thirdCard];
+    	  gameRoom.deck = getDeck().dealCard(burnedCardDeck.cards);
+    	 //deal player cards
+    	 for (i = 0, i < 8, i++){
+	  	 			//if (data.playerData[i].email === data.playerActions.email){
+	  	 				var firstDealToPlayer = getDeck().dealCard(gameRoom.deck);
+	  	 				var firstCardToPlayer = firstDealToPlayer.dealt;
+	  	 				var secondDealToPlayer = getDeck().dealCard(firstDealToPlayer);
+	  	 				var secondCardToPlayer = secondDealToPlayer.dealt;
+	  	 				gameRoom.playerData[i].cardsInHand = [firstCardToPlayer,secondCardToPlayer];
+	  	 			// gameRoom.playerData[i].chipsBlind = "" + 100;
+	  	 			// gameRoom.dealerState.currentBlind = gameRoom.playerData[i].chipsBlind;
+	  	 			//}
+	  	 			gameRoom.deck = secondDealToPlayer.cards;
+	  	 		}
+
+
+    	 gameRoom.dealerState.playState = "preflop";
+	  	 }
+
 
 		if (data.dealerState.playState === "flop"){
     	 
@@ -58,22 +91,46 @@ consumePlayerActions(data){
     	 gameRoom.cardsInPlay = [firstCard, secondCard, thirdCard];
     	 gameRoom.deck = thirdDeal.cards;
     	 //deal player cards
-    	 for (i = 0, i < 8, i++){
-	  	 			//if (data.playerData[i].email === data.playerActions.email){
-	  	 				var firstDealToPlayer = getDeck().dealCard(gameRoom.deck);
-	  	 				var firstCardToPlayer = firstDealToPlayer.dealt;
-	  	 				var secondDealToPlayer = getDeck().dealCard(firstDealToPlayer);
-	  	 				var secondCardToPlayer = secondDealToPlayer.dealt;
-	  	 				gameRoom.playerData[i].cardsInHand = [firstCardToPlayer,secondCardToPlayer];
-	  	 			// gameRoom.playerData[i].chipsBlind = "" + 100;
-	  	 			// gameRoom.dealerState.currentBlind = gameRoom.playerData[i].chipsBlind;
-	  	 			//}
-	  	 			gameRoom.deck = secondDealToPlayer;
-	  	 		}
+    	 // for (i = 0, i < 8, i++){
+	  	 	// 		//if (data.playerData[i].email === data.playerActions.email){
+	  	 	// 			var firstDealToPlayer = getDeck().dealCard(gameRoom.deck);
+	  	 	// 			var firstCardToPlayer = firstDealToPlayer.dealt;
+	  	 	// 			var secondDealToPlayer = getDeck().dealCard(firstDealToPlayer);
+	  	 	// 			var secondCardToPlayer = secondDealToPlayer.dealt;
+	  	 	// 			gameRoom.playerData[i].cardsInHand = [firstCardToPlayer,secondCardToPlayer];
+	  	 	// 		// gameRoom.playerData[i].chipsBlind = "" + 100;
+	  	 	// 		// gameRoom.dealerState.currentBlind = gameRoom.playerData[i].chipsBlind;
+	  	 	// 		//}
+	  	 	// 		gameRoom.deck = secondDealToPlayer;
+	  	 	// 	}
 
 
-    	 gameRoom.dealerState.playState = "playflop";
+    	 gameRoom.dealerState.playState = "turn";
 	  	 }
+
+	  	 else if (data.dealerState.playState === "turn"){
+    	gameRoom.dealerState.turnElapsedTime = 0;
+    	 var burnedCardDeck = getDeck().dealCard(data.deck);
+
+    	 var firstDeal = getDeck().dealCard(burnedCardDeck.cards);
+    	 var firstCard = firstDeal.dealt;
+    	  gameRoom.cardsInPlay.push(firstCard); //= [firstCard, secondCard, thirdCard];
+    	 gameRoom.deck = firstDeal.cards;
+gameRoom.dealerState.playState = "preriver";
+	  	 }
+
+	  	 else if (data.dealerState.playState === "river"){
+    	gameRoom.dealerState.turnElapsedTime = 0;
+    	 var burnedCardDeck = getDeck().dealCard(data.deck);
+
+    	 var firstDeal = getDeck().dealCard(burnedCardDeck.cards);
+    	 var firstCard = firstDeal.dealt;
+    	  gameRoom.cardsInPlay.push(firstCard); //= [firstCard, secondCard, thirdCard];
+    	 gameRoom.deck = firstDeal.cards;
+gameRoom.dealerState.playState = "finalbet";
+	  	 }
+
+
 		if (!Array.isArray(data.playerActions)) {
 	  	 if (data.dealerState.playState === "smallblind"){ 
 	  	 	//bets, default bet
@@ -118,6 +175,7 @@ consumePlayerActions(data){
 	  	 		gameRoom.playerData[1].chipsBlind =  "" + data.playerActions.amount;	
 	  	 			gameRoom.dealerState.currentBlind = gameRoom.playerData[1].chipsBlind;
 	  	 	}
+	  	 	gameRoom.dealerState.playState = "dealing";
     	 }
     	  
     	 // else if (data.dealerState.playState === "dealflop"){
@@ -127,10 +185,8 @@ consumePlayerActions(data){
 	  	 		
 	  	 	// }
     	 // } 
-    	 else if (data.dealerState.playState === "playflop"){
-    	 	if (parseInt(gameRoom.dealerState.playerTurn) == 0){
-    	 		gameRoom.dealerState.playState === "turn"
-    	 	}
+    	 	 else if (data.dealerState.playState === "preflop"){
+    	 	
     	 	if (default){
 //fold
 		gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
@@ -138,34 +194,80 @@ consumePlayerActions(data){
 	  	 	} else {
 	  	 		if (data.playerActions.action === "fold"){
 					gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
-	  	 		} else {
-	  	 			
+	  	 		} else if (data.playerActions.action === "bet") {
+	  	 			gameRoom.playerData[data.dealerState.playerTurn].chipsBlind =  "" + data.playerActions.amount;	
+	  	 			gameRoom.dealerState.currentBlind = gameRoom.playerData[data.dealerState.playerTurn].chipsBlind;
 	  	 		}
 	  	 	}
-    	 } else if (data.dealerState.playState === "playturn"){
+	  	 	if (parseInt(gameRoom.dealerState.playerTurn) == "7"){
+    	 		gameRoom.dealerState.playState === "flop"
+    	 	}
+    	 }
+
+
+    	 else if (data.dealerState.playState === "preturn"){
+    	 	// if (parseInt(gameRoom.dealerState.playerTurn) == 0){
+    	 	// 	gameRoom.dealerState.playState === "flop"
+    	 	// }
     	 	if (default){
+//fold
+		gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 
 	  	 	} else {
-	  	 		
+	  	 		if (data.playerActions.action === "fold"){
+					gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
+	  	 		} else if (data.playerActions.action === "bet") {
+	  	 			gameRoom.playerData[data.dealerState.playerTurn].chipsBlind =  "" + data.playerActions.amount;	
+	  	 			gameRoom.dealerState.currentBlind = gameRoom.playerData[data.dealerState.playerTurn].chipsBlind;
+	  	 		}
 	  	 	}
-    	 } else if (data.dealerState.playState === "river"){
+
+	  	 	if (parseInt(gameRoom.dealerState.playerTurn) == "7"){
+    	 		gameRoom.dealerState.playState === "turn"
+    	 	}
+    	 } 
+    	 else if (data.dealerState.playState === "preriver"){
     	 	if (default){
+//fold
+		gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 
 	  	 	} else {
-	  	 		
+	  	 		if (data.playerActions.action === "fold"){
+					gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
+	  	 		} else if (data.playerActions.action === "bet") {
+	  	 			gameRoom.playerData[data.dealerState.playerTurn].chipsBlind =  "" + data.playerActions.amount;	
+	  	 			gameRoom.dealerState.currentBlind = gameRoom.playerData[data.dealerState.playerTurn].chipsBlind;
+	  	 		}
 	  	 	}
-    	 } else if (data.dealerState.playState === "playriver"){
+
+	  	 	if (parseInt(gameRoom.dealerState.playerTurn) == "7"){
+    	 		gameRoom.dealerState.playState === "river"
+    	 	}
+    	 }  else if (data.dealerState.playState === "finalbet"){
     	 	if (default){
+//fold
+		gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 
 	  	 	} else {
-	  	 		
+	  	 		if (data.playerActions.action === "fold"){
+					gameRoom.playerData[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
+	  	 		} else if (data.playerActions.action === "bet") {
+	  	 			gameRoom.playerData[data.dealerState.playerTurn].chipsBlind =  "" + data.playerActions.amount;	
+	  	 			gameRoom.dealerState.currentBlind = gameRoom.playerData[data.dealerState.playerTurn].chipsBlind;
+	  	 		}
 	  	 	}
-    	 } else if (data.dealerState.playState === "showdown"){
-    	 	if (default){
 
-	  	 	} else {
+	  	 	if (parseInt(gameRoom.dealerState.playerTurn) == "7"){
+    	 		gameRoom.dealerState.playState === "river"
+    	 	}
+    	 }  
+
+    	 else if (data.dealerState.playState === "showdown"){
+    	 // 	if (default){
+
+	  	 	// } else {
 	  	 		
-	  	 	}
+	  	 	// }
     	 } else if (data.dealerState.playState === "scoring"){
     	 	if (default){
 
@@ -187,7 +289,9 @@ consumePlayerActions(data){
     	}
     	}
 
-    	
+    	if(gameRoom.playerData[parseInt(gameRoom.dealerState.playerTurn)].cardsInHand){
+
+    	}
     	
     	  gameRoom.dealerState.turnElapsedTime = (currentTime).ToString();
     	 gameRoom.playerActions = [];
