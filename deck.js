@@ -128,7 +128,7 @@ var firstRandom =  Math.floor(Math.random() * cards.length);
 var firstCopyCard = new Card(cards[firstRandom].rank, cards[firstRandom].suit);
 cards.splice(firstRandom, 1);
 
-return {cards: cards, dealt: firstCopyCard};
+return {cards: cards, dealt: firstCopyCard.getCard()};
 }
 
 

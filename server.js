@@ -389,22 +389,47 @@ try {
 	 const collection =  await db.collection('gameRoomData');
 var gameRoomPlayerActions =  await collection.find({roomId: '' + actionObject.roomId}, { projection: { _id: 0, playerActions: 1 } }).toArray();
 
-if (gameRoomPlayerActions.length === 0){
+if (gameRoomPlayerActions.length === 0) {
+
 	const collectionUserData = await db.collection('userData');
 	var userChips =  await collectionUserData.find({email: '' + actionObject.email}, { projection: { _id: 0, chips: 1 } }).toArray();
 
-	if (actionObject.action === "bet"){
+	if (actionObject.action === "bet") {
 
 		var myquery = { email: actionObject.email, password: actionObject.password};
   var newvalues = {$set: { chips: '' + (parseInt(userChips.chips) - parseInt(actionObject.amount));}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
    await collectionUserData.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
-    console.log(requestBody.email + " changed scene to " +  requestBody.destination);
-  
+    console.log(actionObject.email + " changed scene to " +  actionObject.destination);
+  	
+  	var aquery = { roomId: '' + actionObject.roomId};
+  var anewvalues = {$set: { playerActions: actionObject]}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+ 
+  	await collection.updateOne(aquery, avalues, function(err, res) {
+    if (err) throw err;
+    console.log(actionObject.email + " changed scene to " +  actionObject.destination);
+  	
+  	
+    //db.close();
+  });
+
     //db.close();
   });
 
 		
+	} else {
+//fold
+
+	var bquery = { roomId: '' + actionObject.roomId};
+  var bnewvalues = {$set: { playerActions: actionObject]}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+ 
+  	await collection.updateOne(bquery, bvalues, function(err, res) {
+    if (err) throw err;
+    console.log(actionObject.email +  " changed scene to " +  actionObject.destination);
+  	
+  	
+    //db.close();
+  });
 	}
 }
 	} catch(e){
@@ -593,6 +618,7 @@ await collectionGameRoom.insertOne(
  	{roomId: '' + data.roomId,
  	players: playerData,
  	deck: startingDeck,
+ 	cardsInPlay: [],
  	dealerState: startingDealerState,
  	playerActions: []//,
  	//turnElapsedTime: 0
