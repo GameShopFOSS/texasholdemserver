@@ -397,7 +397,7 @@ if (gameRoomPlayerActions.length === 0) {
 	if (actionObject.action === "bet") {
 
 		var myquery = { email: actionObject.email, password: actionObject.password};
-  var newvalues = {$set: { chips: '' + (parseInt(userChips.chips) - parseInt(actionObject.amount));}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+  var newvalues = {$set: { chips: '' + (parseInt(userChips.chips) - parseInt(actionObject.amount))}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
    await collectionUserData.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(actionObject.email + " changed scene to " +  actionObject.destination);
