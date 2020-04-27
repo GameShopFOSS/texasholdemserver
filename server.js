@@ -322,16 +322,16 @@ var result = {error: "Creating lobby queue error!"};
 	const collection = await db.collection('gameRoomData');
 	var gameRooms = await collection.find({}, { projection: { _id: 0, roomId: 1} }).toArray();
 	finalId += gameRooms.length;
-	 collection = await db.collection('lobbyQueueData');
+	 const collectionTwo = await db.collection('lobbyQueueData');
   
-	var lobbyQueue = await collection.find({}, { projection: { _id: 0, roomId: 1} }).toArray();
+	var lobbyQueue = await collectionTwo.find({}, { projection: { _id: 0, roomId: 1} }).toArray();
 	finalId += lobbyQueue.length;
 // 		 if (emailAddress.length > 0){
 // 	 	return true;
 // 	 }
 
 // return false;
-   await collection.insertOne(
+   await collectionTwo.insertOne(
  	{roomId: '' + finalId,
  	  players: [{email: requestBody.email, firstname: requestBody.firstname}],
 	queueState: 'Waiting for players'
