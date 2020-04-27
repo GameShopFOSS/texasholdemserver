@@ -428,10 +428,14 @@ return {cards: cards, dealt: firstCopyCard};
 differentRandom(amount){
 
 var trial = Math.floor(Math.random() * amount);
-if (trial !== amount){
-	return this.differentRandom(amount);
+// if (trial === amount){
+// 	return this.differentRandom(amount);
+// }
+while (trial === amount){
+	 trial = Math.floor(Math.random() * amount);
 }
  return trial;
+}
 }
 
 }
