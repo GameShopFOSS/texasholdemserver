@@ -305,66 +305,66 @@ orderPlayedCards(cardsInPlay){
 instantiateDeck(){
 
 var cards = [];
-cards.push(new Card("Ace", "Spades"));
-cards.push(new Card("2", "Spades"));
-cards.push(new Card("3", "Spades"));
-cards.push(new Card("4", "Spades"));
-cards.push(new Card("5", "Spades"));
-cards.push(new Card("6", "Spades"));
-cards.push(new Card("7", "Spades"));
-cards.push(new Card("8", "Spades"));
-cards.push(new Card("9", "Spades"));
-cards.push(new Card("10", "Spades"));
-cards.push(new Card("Jack", "Spades"));
-cards.push(new Card("Queen", "Spades"));
-cards.push(new Card("King", "Spades"));
+cards.push(new Card("Ace", "Spades").getCard());
+cards.push(new Card("2", "Spades").getCard());
+cards.push(new Card("3", "Spades").getCard());
+cards.push(new Card("4", "Spades").getCard());
+cards.push(new Card("5", "Spades").getCard());
+cards.push(new Card("6", "Spades").getCard());
+cards.push(new Card("7", "Spades").getCard());
+cards.push(new Card("8", "Spades").getCard());
+cards.push(new Card("9", "Spades").getCard());
+cards.push(new Card("10", "Spades").getCard());
+cards.push(new Card("Jack", "Spades").getCard());
+cards.push(new Card("Queen", "Spades").getCard());
+cards.push(new Card("King", "Spades").getCard());
 
 
-cards.push(new Card("Ace", "Clubs"));
-cards.push(new Card("2", "Clubs"));
-cards.push(new Card("3", "Clubs"));
-cards.push(new Card("4", "Clubs"));
-cards.push(new Card("5", "Clubs"));
-cards.push(new Card("6", "Clubs"));
-cards.push(new Card("7", "Clubs"));
-cards.push(new Card("8", "Clubs"));
-cards.push(new Card("9", "Clubs"));
-cards.push(new Card("10", "Clubs"));
-cards.push(new Card("Jack", "Clubs"));
-cards.push(new Card("Queen", "Clubs"));
-cards.push(new Card("King", "Clubs"));
+cards.push(new Card("Ace", "Clubs").getCard());
+cards.push(new Card("2", "Clubs").getCard());
+cards.push(new Card("3", "Clubs").getCard());
+cards.push(new Card("4", "Clubs").getCard());
+cards.push(new Card("5", "Clubs").getCard());
+cards.push(new Card("6", "Clubs").getCard());
+cards.push(new Card("7", "Clubs").getCard());
+cards.push(new Card("8", "Clubs").getCard());
+cards.push(new Card("9", "Clubs").getCard());
+cards.push(new Card("10", "Clubs").getCard());
+cards.push(new Card("Jack", "Clubs").getCard());
+cards.push(new Card("Queen", "Clubs").getCard());
+cards.push(new Card("King", "Clubs").getCard());
 
-cards.push(new Card("Ace", "Hearts"));
-cards.push(new Card("2", "Hearts"));
-cards.push(new Card("3", "Hearts"));
-cards.push(new Card("4", "Hearts"));
-cards.push(new Card("5", "Hearts"));
-cards.push(new Card("6", "Hearts"));
-cards.push(new Card("7", "Hearts"));
-cards.push(new Card("8", "Hearts"));
-cards.push(new Card("9", "Hearts"));
-cards.push(new Card("10", "Hearts"));
-cards.push(new Card("Jack", "Hearts"));
-cards.push(new Card("Queen", "Hearts"));
-cards.push(new Card("King", "Hearts"));
+cards.push(new Card("Ace", "Hearts").getCard());
+cards.push(new Card("2", "Hearts").getCard());
+cards.push(new Card("3", "Hearts").getCard());
+cards.push(new Card("4", "Hearts").getCard());
+cards.push(new Card("5", "Hearts").getCard());
+cards.push(new Card("6", "Hearts").getCard());
+cards.push(new Card("7", "Hearts").getCard());
+cards.push(new Card("8", "Hearts").getCard());
+cards.push(new Card("9", "Hearts").getCard());
+cards.push(new Card("10", "Hearts").getCard());
+cards.push(new Card("Jack", "Hearts").getCard());
+cards.push(new Card("Queen", "Hearts").getCard());
+cards.push(new Card("King", "Hearts").getCard());
 
-cards.push(new Card("Ace", "Diamonds"));
-cards.push(new Card("2", "Diamonds"));
-cards.push(new Card("3", "Diamonds"));
-cards.push(new Card("4", "Diamonds"));
-cards.push(new Card("5", "Diamonds"));
-cards.push(new Card("6", "Diamonds"));
-cards.push(new Card("7", "Diamonds"));
-cards.push(new Card("8", "Diamonds"));
-cards.push(new Card("9", "Diamonds"));
-cards.push(new Card("10", "Diamonds"));
-cards.push(new Card("Jack", "Diamonds"));
-cards.push(new Card("Queen", "Diamonds"));
-cards.push(new Card("King", "Diamonds"));
+cards.push(new Card("Ace", "Diamonds").getCard());
+cards.push(new Card("2", "Diamonds").getCard());
+cards.push(new Card("3", "Diamonds").getCard());
+cards.push(new Card("4", "Diamonds").getCard());
+cards.push(new Card("5", "Diamonds").getCard());
+cards.push(new Card("6", "Diamonds").getCard());
+cards.push(new Card("7", "Diamonds").getCard());
+cards.push(new Card("8", "Diamonds").getCard());
+cards.push(new Card("9", "Diamonds").getCard());
+cards.push(new Card("10", "Diamonds").getCard());
+cards.push(new Card("Jack", "Diamonds").getCard());
+cards.push(new Card("Queen", "Diamonds").getCard());
+cards.push(new Card("King", "Diamonds").getCard());
 var cardDeck = [];
-for (i = 0; i = cards.length; i++){
-cardDeck.push(cards[i].getCard());
-}
+// for (i = 0; i = cards.length; i++){
+// cardDeck.push(cards[i].getCard());
+// }
 
 return cardDeck;
 }
@@ -418,10 +418,10 @@ dealCard(deck) {
 	var cards = deck;
 var firstRandom =  Math.floor(Math.random() * cards.length);
 //var secondRandom =  differentRandom(Math.floor(Math.random() * cards.length);
-var firstCopyCard = new Card(cards[firstRandom].rank, cards[firstRandom].suit);
+var firstCopyCard = new Card(cards[firstRandom].rank, cards[firstRandom].suit).getCard();
 cards.splice(firstRandom, 1);
 
-return {cards: cards, dealt: firstCopyCard.getCard()};
+return {cards: cards, dealt: firstCopyCard};
 }
 
 
