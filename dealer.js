@@ -57,13 +57,14 @@ consumePlayerActions(data) {
     	 // var thirdDeal = this.getDeck().dealCard(secondDeal.cards);
     	 // var thirdCard = thirdDeal.dealt;
     	 // gameRoom.cardsInPlay = [firstCard, secondCard, thirdCard];
-    	  gameRoom.deck = this.getDeck().dealCard(burnedCardDeck.cards);
+    	 var tempDeck = this.getDeck().dealCard(burnedCardDeck.cards);
+    	 // gameRoom.deck = this.getDeck().dealCard(burnedCardDeck.cards);
     	 //deal player cards
     	 for (var i = 0; i < 8; i++){
 	  	 			//if (data.players[i].email === data.playerActions.email){
-	  	 				var firstDealToPlayer = this.getDeck().dealCard(gameRoom.deck);
+	  	 				var firstDealToPlayer = this.getDeck().dealCard(tempDeck.cards);
 	  	 				var firstCardToPlayer = firstDealToPlayer.dealt;
-	  	 				var secondDealToPlayer = this.getDeck().dealCard(firstDealToPlayer);
+	  	 				var secondDealToPlayer = this.getDeck().dealCard(firstDealToPlayer.cards);
 	  	 				var secondCardToPlayer = secondDealToPlayer.dealt;
 	  	 				gameRoom.players[i].cardsInHand.push(firstCardToPlayer,secondCardToPlayer);
 	  	 			// gameRoom.players[i].chipsBlind = "" + 100;
