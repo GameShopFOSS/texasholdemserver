@@ -328,7 +328,7 @@ gameRoom.dealerState.playState = "finalbet";
     	}
     	}
 
-    	if(gameRoom.players[parseInt(gameRoom.dealerState.playerTurn)].cardsInHand.length == 0){
+    	if(dfault){
 gameRoom.dealerState.playerTurn = "" +(parseInt(gameRoom.dealerState.playerTurn) + 1);
     	}
     	
