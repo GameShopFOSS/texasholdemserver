@@ -1,7 +1,7 @@
 const {Deck} = require('./deck.js');
 
 class Dealer{
-deck = new Deck();
+//deck = new Deck();
 //playerActions
 //phase = "";//smallBlind, bigBlind
 //positionReference = 0;
@@ -13,7 +13,7 @@ constructor(){
 //put in bigblind
 getDeck() {
 
-	return deck;
+	return new Deck();
 }
 
 initializeDealerState(){
