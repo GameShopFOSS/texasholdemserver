@@ -658,7 +658,7 @@ playerData.push({email: data.email, firstname: data.firstname, chipsStocked: "0"
 
 
 
-
+dealer = new Dealer();
 
 //const collectionUserData = await db.collection("userData");
  ///var userDataPlayers = await collection.find({email: collectionUserData.email, chips: collectionUserData.chips}, { projection: { _id: 0, email: 1, chips: 1} }).toArray();
