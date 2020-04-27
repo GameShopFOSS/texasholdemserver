@@ -679,9 +679,10 @@ var dealer = new Dealer();
     if (err) throw err;
     console.log("1 document inserted");
     //db.close();
+    collection.findOneAndDelete(data);
   });
 
- collection.findOneAndDelete(data);
+ 
   }
 
 //   if (data.lastUpdate > 3600) {
