@@ -226,7 +226,7 @@ async function populateQueuesandGameRooms(){
 	gameRooms = await collection.find({}, { projection: { _id: 0, roomId: 1,  players: 1} }).toArray();  //, (err, item) => {
 
 	const collectionLobby = await db.collection('lobbyQueueData');
-	lobbyQueue = await collectionLobby.find({}, { projection: { _id: 0, roomId: 1, players: {email: 1, firstname: 1}} }).toArray();
+	lobbyQueue = await collectionLobby.find({}, { projection: { _id: 0, roomId: 1, players: 1} }).toArray();
  //    var updatedLobbyQueue = [];
 	// for (i = 0; i < lobbyQueue.length; i++){
 	// 	var updatedRoom = {};
