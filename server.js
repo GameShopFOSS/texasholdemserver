@@ -373,6 +373,7 @@ var result = {error: "Creating joining queue!"};
   var lobbyQueue = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, roomId: 1} }).toArray();
 
 if (lobbyQueue.length > 0){
+	console.log("here");
 	if (Array.isArray(lobbyQueue[0].players)){
 	if (lobbyQueue[0].players.length < 8){
 	await collection.update(
