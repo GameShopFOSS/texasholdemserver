@@ -37,6 +37,7 @@ consumePlayerActions(data) {
     	 if (currentTime > 30) {
 //fold or choose dfault action
 			dfault = true;
+			gameRoom.dealerState.turnElapsedTime = 0;
     	 }
 
     	 //fold, call, raise
@@ -338,7 +339,7 @@ gameRoom.dealerState.turnElapsedTime = 0;
 gameRoom.dealerState.playerTurn = "" +(parseInt(gameRoom.dealerState.playerTurn) + 1);
     	}
     	
-    	  gameRoom.dealerState.turnElapsedTime = (currentTime) + "";
+    	//  gameRoom.dealerState.turnElapsedTime = (parseIntgameRoom.dealerState.turnElapsedTime + 1) + "";
     	 gameRoom.playerActions = [];
 
     	 return gameRoom;
