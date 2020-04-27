@@ -427,7 +427,7 @@ return {cards: cards, dealt: firstCopyCard};
 
 differentRandom(amount){
 
-var trial = Math.floor(Math.random() * cards.length);
+var trial = Math.floor(Math.random() * amount);
 if (trial === amount){
 	return this.differentRandom(amount);
 }
