@@ -418,7 +418,7 @@ dealCard(deck) {
 	var cards = deck;
 var firstRandom =  Math.floor(Math.random() * cards.length);
 //var secondRandom =  differentRandom(Math.floor(Math.random() * cards.length);
-var firstCopyCard = new Card(cards[firstRandom].suit, cards[firstRandom].rank).getCard();
+var firstCopyCard = cards[firstRandom];//new Card(cards[firstRandom].suit, cards[firstRandom].rank).getCard();
 cards.splice(firstRandom, 1);
 
 return {cards: cards, dealt: firstCopyCard};
