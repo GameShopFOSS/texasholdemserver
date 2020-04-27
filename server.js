@@ -373,12 +373,14 @@ var result = {error: "Creating joining queue!"};
   var lobbyQueue = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, roomId: 1} }).toArray();
 
 if (lobbyQueue.length > 0){
+	if (Array.isArray(lobbyQueue[0].players)){
 	if (lobbyQueue[0].players.length < 8){
 	await collection.update(
    { roomId: requestBody.roomId},
    { $addToSet: { players: {email: requestBody.email, firstname: requestBody.firstname} } }
 )
 	result = {success: "OK", roomId: requestBody.roomId};
+}
 }
 }
 //    await collection.insertOne(
