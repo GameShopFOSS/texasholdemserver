@@ -151,7 +151,7 @@ gameRoom.dealerState.playState = "finalbet";
     	 }
 
 
-		if (data.playerActions.hasOwnProperty(action) || dfault) {
+		if (data.playerActions.hasOwnProperty("action") || dfault) {
 	  	 if (data.dealerState.playState === "smallblind"){ 
 	  	 	//bets, dfault bet
 	  	 	if (dfault){
@@ -282,7 +282,7 @@ gameRoom.dealerState.playState = "finalbet";
 					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 	  	 			//gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
 	  	 		}
-	  	 		
+
 	  	 	}
 gameRoom.dealerState.turnElapsedTime = 0;
 	  	 	if (parseInt(gameRoom.dealerState.playerTurn) == "7"){
