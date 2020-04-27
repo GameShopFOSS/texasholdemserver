@@ -851,7 +851,7 @@ app.post('/createnewlobbyqueue', async (req, res) => {
 	var responseString = {response: "error"};
 	 try {
     
-         responseString = await createNewLobbyQueue(req);
+         responseString = await createNewLobbyQueue(req.body);
 
     } catch (e) {
         console.error(e);
@@ -871,7 +871,7 @@ app.post('/enterspecificlobbyqueue', async (req, res) => {
 	var responseString = {response: "error"};
 	 try {
     
-         responseString = await enterSpecificLobbyQueue(req);
+         responseString = await enterSpecificLobbyQueue(req.body);
 
     } catch (e) {
         console.error(e);
@@ -891,7 +891,7 @@ app.post('/getlobbyqueuestate', async (req, res) => {
 	var responseString = {response: "error"};
 	 try {
     
-         responseString = await getLobbyQueueState(req);
+         responseString = await getLobbyQueueState(req.body);
 
     } catch (e) {
         console.error(e);
@@ -911,7 +911,7 @@ app.post('/getgameroomstate', async (req, res) => {
 	var responseString = {response: "error"};
 	 try {
     
-         responseString = await getGameRoomState(req);
+         responseString = await getGameRoomState(req.body);
 
     } catch (e) {
         console.error(e);
@@ -931,7 +931,7 @@ app.post('/submitplayeraction', async (req, res) => {
 	var responseString = {response: "error"};
 	 try {
     
-         responseString = await submitplayeraction(req);
+         responseString = await submitplayeraction(req.body);
 
     } catch (e) {
         console.error(e);
