@@ -382,7 +382,7 @@ return cards;
 shuffleTwoCards(deck){
 	var cards = deck;
 var firstRandom =  Math.floor(Math.random() * cards.length);
-var secondRandom =  differentRandom(Math.floor(Math.random() * cards.length));
+var secondRandom =  this.differentRandom(Math.floor(Math.random() * cards.length));
 var firstCopyCard = new Card(cards[firstRandom].rank, cards[firstRandom].suit).getCard();
 var secondCopyCard = new Card(cards[secondRandom].rank, cards[secondRandom].suit).getCard();
 
@@ -429,7 +429,7 @@ differentRandom(amount){
 
 var trial = Math.floor(Math.random() * cards.length);
 if (trial === amount){
-	return differentRandom(amount);
+	return this.differentRandom(amount);
 }
  return trial;
 }
