@@ -383,8 +383,8 @@ shuffleTwoCards(deck){
 	var cards = deck;
 var firstRandom =  Math.floor(Math.random() * cards.length);
 var secondRandom =  this.differentRandom(Math.floor(Math.random() * cards.length));
-var firstCopyCard = new Card(cards[firstRandom].rank, cards[firstRandom].suit).getCard();
-var secondCopyCard = new Card(cards[secondRandom].rank, cards[secondRandom].suit).getCard();
+var firstCopyCard = new Card(cards[firstRandom].suit, cards[firstRandom].rank).getCard();
+var secondCopyCard = new Card( cards[secondRandom].suit, cards[secondRandom].rank,).getCard();
 
 	//if (firstRandom < secondRandom){
 		cards.splice(firstRandom, 1);
@@ -418,7 +418,7 @@ dealCard(deck) {
 	var cards = deck;
 var firstRandom =  Math.floor(Math.random() * cards.length);
 //var secondRandom =  differentRandom(Math.floor(Math.random() * cards.length);
-var firstCopyCard = new Card(cards[firstRandom].rank, cards[firstRandom].suit).getCard();
+var firstCopyCard = new Card(cards[firstRandom].suit, cards[firstRandom].rank).getCard();
 cards.splice(firstRandom, 1);
 
 return {cards: cards, dealt: firstCopyCard};
