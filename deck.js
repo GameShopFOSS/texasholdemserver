@@ -366,7 +366,7 @@ var cardDeck = [];
 // cardDeck.push(cards[i].getCard());
 // }
 
-return cardDeck;
+return cards;
 }
 
 shuffle(deck){
