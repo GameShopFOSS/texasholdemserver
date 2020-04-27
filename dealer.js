@@ -322,14 +322,14 @@ gameRoom.dealerState.playState = "finalbet";
     	 } 
 
     	 if (parseInt(gameRoom.dealerState.playerTurn) < 7){
-    		gameRoom.dealerState.playerTurn = "" +parseInt(gameRoom.dealerState.playerTurn) + 1;
+    		gameRoom.dealerState.playerTurn = "" +(parseInt(gameRoom.dealerState.playerTurn) + 1);
     	} else {
     		gameRoom.dealerState.playerTurn = "0";
     	}
     	}
 
     	if(gameRoom.players[parseInt(gameRoom.dealerState.playerTurn)].cardsInHand.length == 0){
-gameRoom.dealerState.playerTurn = "" +parseInt(gameRoom.dealerState.playerTurn) + 1;
+gameRoom.dealerState.playerTurn = "" +(parseInt(gameRoom.dealerState.playerTurn) + 1);
     	}
     	
     	  gameRoom.dealerState.turnElapsedTime = (currentTime) + "";
