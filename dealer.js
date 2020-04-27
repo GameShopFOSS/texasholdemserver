@@ -65,7 +65,7 @@ consumePlayerActions(data) {
 	  	 				var firstCardToPlayer = firstDealToPlayer.dealt;
 	  	 				var secondDealToPlayer = this.getDeck().dealCard(firstDealToPlayer);
 	  	 				var secondCardToPlayer = secondDealToPlayer.dealt;
-	  	 				gameRoom.players[i].cardsInHand = [firstCardToPlayer,secondCardToPlayer];
+	  	 				gameRoom.players[i].cardsInHand.push(firstCardToPlayer,secondCardToPlayer);
 	  	 			// gameRoom.players[i].chipsBlind = "" + 100;
 	  	 			// gameRoom.dealerState.currentBlind = gameRoom.players[i].chipsBlind;
 	  	 			//}
@@ -88,7 +88,7 @@ consumePlayerActions(data) {
     	 var secondCard = secondDeal.dealt;
     	 var thirdDeal = this.getDeck().dealCard(secondDeal.cards);
     	 var thirdCard = thirdDeal.dealt;
-    	 gameRoom.cardsInPlay = [firstCard, secondCard, thirdCard];
+    	 gameRoom.cardsInPlay.push(firstCard, secondCard, thirdCard);
     	 gameRoom.deck = thirdDeal.cards;
     	 //deal player cards
     	 // for (i = 0, i < 8, i++){
