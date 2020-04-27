@@ -16,7 +16,7 @@ constructor(suit, rank){
 
 getCard(){
 
-	return {suit: suit, rank: rank};
+	return {suit: this.suit, rank: this.rank};
 }
 }
 
