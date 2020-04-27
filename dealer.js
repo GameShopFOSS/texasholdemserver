@@ -189,7 +189,7 @@ gameRoom.dealerState.playState = "finalbet";
 //for (i = 0, i < 8, i++){
 	  	 		//	if (data.players[i].email === playerActions.email){
 	  	 			gameRoom.players[1].chipsBlind = "" + (parseInt(gameRoom.dealerState.currentBlind) * 2);	
-	  	 			gameRoom.dealerState.currentBlind = (parseInt(gameRoom.players[1].chipsBlind) + parseInt(gameRoom.dealerState.currentBlind)).ToString();
+	  	 			gameRoom.dealerState.currentBlind = (parseInt(gameRoom.players[1].chipsBlind) + parseInt(gameRoom.dealerState.currentBlind)) + "";
 	  	 		//	}
 
 	  	 		gameRoom.dealerState.currentPot = gameRoom.dealerState.currentBlind;
@@ -197,7 +197,7 @@ gameRoom.dealerState.playState = "finalbet";
 	  	 	} else {
 	  	 		//for (i = 0, i < 8, i++){
 	  	 		gameRoom.players[1].chipsBlind =  "" + data.playerActions.amount;	
-	  	 			gameRoom.dealerState.currentBlind = (parseInt(gameRoom.players[1].chipsBlind) + parseInt(gameRoom.dealerState.currentBlind)).ToString();
+	  	 			gameRoom.dealerState.currentBlind = (parseInt(gameRoom.players[1].chipsBlind) + parseInt(gameRoom.dealerState.currentBlind)) + "";
 	  	 			gameRoom.dealerState.currentPot = gameRoom.dealerState.currentBlind;
 	  	 	}
 	  	 	gameRoom.dealerState.playState = "dealing";
@@ -222,10 +222,10 @@ gameRoom.dealerState.playState = "finalbet";
 	  	 		} else if (data.playerActions.action === "call") {
 	  	 			//gameRoom.players[data.dealerState.playerTurn].chipsBlind =  (parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind) + parseInt(data.playerActions.amount));	
 	  	 			//gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)); //parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind)).ToString();
-				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
+				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 	  	 		} else if (data.playerActions.action === "raise"){
-					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
-					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)).ToString();
+					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
+					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 	  	 			//gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
 	  	 		}
 	  	 	}
@@ -249,10 +249,10 @@ gameRoom.dealerState.playState = "finalbet";
 	  	 		} else if (data.playerActions.action === "call") {
 	  	 			//gameRoom.players[data.dealerState.playerTurn].chipsBlind =  (parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind) + parseInt(data.playerActions.amount));	
 	  	 			//gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)); //parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind)).ToString();
-				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
+				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 	  	 		} else if (data.playerActions.action === "raise"){
-					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
-					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)).ToString();
+					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
+					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 	  	 			//gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
 	  	 		}
 	  	 	}
@@ -272,10 +272,10 @@ gameRoom.dealerState.playState = "finalbet";
 	  	 		} else if (data.playerActions.action === "call") {
 	  	 			//gameRoom.players[data.dealerState.playerTurn].chipsBlind =  (parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind) + parseInt(data.playerActions.amount));	
 	  	 			//gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)); //parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind)).ToString();
-				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
+				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 	  	 		} else if (data.playerActions.action === "raise"){
-					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
-					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)).ToString();
+					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
+					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 	  	 			//gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
 	  	 		}
 	  	 	}
