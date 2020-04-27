@@ -340,9 +340,9 @@ var result = {error: "Creating lobby queue error!"};
     if (err) throw err;
     console.log("1 document inserted");
     //db.close();
-    result = {success: "OK", roomId: '' + finalId};
+    
   });
-
+result = {success: "OK", roomId: '' + finalId};
    //console.log(resultOfInsert);
 } catch(e) {
 	console.log(e);
