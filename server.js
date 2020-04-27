@@ -505,7 +505,7 @@ try {
     await collection.find().forEach(function(data) {
 //smallblind, bigblind, flop, dealflop, playflop, turn, playturn, river, playriver, showdown, scoring, finish
   
-  		var resultingRoom = dealer.consumePlayerActions(data);
+  		var resultingRoom = new Dealer().consumePlayerActions(data);
 
  //   if (data.lastUpdate > 10){
 	var myquery = { roomId: data.roomId};
