@@ -648,7 +648,7 @@ async function transitionScene(requestBody){
 var playerData = [];
 
 for (i = 0; i < data.players.length; i++){
-playerData.push({email: data.email, firstname: data.firstname, chipsStocked: "0", chipsBlind: "0", cardsInHand : [], clockWisePositionFromButton: '' + i});
+playerData.push({email: data.players[i].email, firstname: data.players[i].firstname, chipsStocked: "0", chipsBlind: "0", cardsInHand : [], clockWisePositionFromButton: '' + i});
 }
 
 
