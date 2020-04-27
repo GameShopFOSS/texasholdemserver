@@ -766,7 +766,7 @@ app.post('/connectionpoll', async (req, res) => {
 	 try {
         // Connect to the MongoDB cluster
         //await client.connect();
-        if (client){
+        if (client.db.serverConfig.isConnected()){
         	responseString = await updateConnectionPoll(req.body);
         } 
  		
