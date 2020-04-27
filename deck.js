@@ -438,6 +438,6 @@ while (trial === amount){
 }
 }
 
-}
+
 
 module.exports = {Deck};
