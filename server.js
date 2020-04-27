@@ -680,6 +680,8 @@ var dealer = new Dealer();
     console.log("1 document inserted");
     //db.close();
   });
+
+ collection.findOneAndDelete(data);
   }
 
 //   if (data.lastUpdate > 3600) {
