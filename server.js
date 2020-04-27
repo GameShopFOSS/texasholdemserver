@@ -987,7 +987,9 @@ let connections = [];
 const server = app.listen(port, () => {
 
 	console.log(`Example app listening at http://localhost:${port}`);
-	client.connect().then({canConnect = true;});
+	client.connect((err, db) =>{
+		canConnect = true;
+	});
 
 	//main().catch(console.error);
 
