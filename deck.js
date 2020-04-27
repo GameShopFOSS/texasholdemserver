@@ -373,7 +373,7 @@ shuffle(deck){
 var cards = [];
 for (i = 0; i < 100; i++){
 
-	cards = shuffleTwoCards(deck);
+	cards = this.shuffleTwoCards(deck);
 }
 
 return cards;
@@ -383,14 +383,14 @@ shuffleTwoCards(deck){
 	var cards = deck;
 var firstRandom =  Math.floor(Math.random() * cards.length);
 var secondRandom =  differentRandom(Math.floor(Math.random() * cards.length));
-var firstCopyCard = new Card(cards[firstRandom].rank, cards[firstRandom].suit);
-var secondCopyCard = new Card(cards[secondRandom].rank, cards[secondRandom].suit);
+var firstCopyCard = new Card(cards[firstRandom].rank, cards[firstRandom].suit).getCard();
+var secondCopyCard = new Card(cards[secondRandom].rank, cards[secondRandom].suit).getCard();
 
 	//if (firstRandom < secondRandom){
 		cards.splice(firstRandom, 1);
-		cards.push(firstCopyCard.getCard());
+		cards.push(firstCopyCard);
 		cards.splice(secondRandom, 1);
-		cards.push(secondCopyCard.getCard());
+		cards.push(secondCopyCard);
 		
 	//} else {
 

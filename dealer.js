@@ -48,22 +48,22 @@ consumePlayerActions(data) {
 	if (data.dealerState.playState === "dealing"){
     	 
     	 gameRoom.dealerState.turnElapsedTime = 0;
-    	 var burnedCardDeck = getDeck().dealCard(data.deck);
+    	 var burnedCardDeck = this.getDeck().dealCard(data.deck);
 
-    	 // var firstDeal = getDeck().dealCard(burnedCardDeck.cards);
+    	 // var firstDeal = this.getDeck().dealCard(burnedCardDeck.cards);
     	 // var firstCard = firstDeal.dealt;
-    	 // var secondDeal = getDeck().dealCard(firstDeal.cards);
+    	 // var secondDeal = this.getDeck().dealCard(firstDeal.cards);
     	 // var secondCard = secondDeal.dealt;
-    	 // var thirdDeal = getDeck().dealCard(secondDeal.cards);
+    	 // var thirdDeal = this.getDeck().dealCard(secondDeal.cards);
     	 // var thirdCard = thirdDeal.dealt;
     	 // gameRoom.cardsInPlay = [firstCard, secondCard, thirdCard];
-    	  gameRoom.deck = getDeck().dealCard(burnedCardDeck.cards);
+    	  gameRoom.deck = this.getDeck().dealCard(burnedCardDeck.cards);
     	 //deal player cards
     	 for (i = 0; i < 8; i++){
 	  	 			//if (data.players[i].email === data.playerActions.email){
-	  	 				var firstDealToPlayer = getDeck().dealCard(gameRoom.deck);
+	  	 				var firstDealToPlayer = this.getDeck().dealCard(gameRoom.deck);
 	  	 				var firstCardToPlayer = firstDealToPlayer.dealt;
-	  	 				var secondDealToPlayer = getDeck().dealCard(firstDealToPlayer);
+	  	 				var secondDealToPlayer = this.getDeck().dealCard(firstDealToPlayer);
 	  	 				var secondCardToPlayer = secondDealToPlayer.dealt;
 	  	 				gameRoom.players[i].cardsInHand = [firstCardToPlayer,secondCardToPlayer];
 	  	 			// gameRoom.players[i].chipsBlind = "" + 100;
@@ -80,22 +80,22 @@ consumePlayerActions(data) {
 		if (data.dealerState.playState === "flop"){
     	 
     	 gameRoom.dealerState.turnElapsedTime = 0;
-    	 var burnedCardDeck = getDeck().dealCard(data.deck);
+    	 var burnedCardDeck = this.getDeck().dealCard(data.deck);
 
-    	 var firstDeal = getDeck().dealCard(burnedCardDeck.cards);
+    	 var firstDeal = this.getDeck().dealCard(burnedCardDeck.cards);
     	 var firstCard = firstDeal.dealt;
-    	 var secondDeal = getDeck().dealCard(firstDeal.cards);
+    	 var secondDeal = this.getDeck().dealCard(firstDeal.cards);
     	 var secondCard = secondDeal.dealt;
-    	 var thirdDeal = getDeck().dealCard(secondDeal.cards);
+    	 var thirdDeal = this.getDeck().dealCard(secondDeal.cards);
     	 var thirdCard = thirdDeal.dealt;
     	 gameRoom.cardsInPlay = [firstCard, secondCard, thirdCard];
     	 gameRoom.deck = thirdDeal.cards;
     	 //deal player cards
     	 // for (i = 0, i < 8, i++){
 	  	 	// 		//if (data.players[i].email === data.playerActions.email){
-	  	 	// 			var firstDealToPlayer = getDeck().dealCard(gameRoom.deck);
+	  	 	// 			var firstDealToPlayer = this.getDeck().dealCard(gameRoom.deck);
 	  	 	// 			var firstCardToPlayer = firstDealToPlayer.dealt;
-	  	 	// 			var secondDealToPlayer = getDeck().dealCard(firstDealToPlayer);
+	  	 	// 			var secondDealToPlayer = this.getDeck().dealCard(firstDealToPlayer);
 	  	 	// 			var secondCardToPlayer = secondDealToPlayer.dealt;
 	  	 	// 			gameRoom.players[i].cardsInHand = [firstCardToPlayer,secondCardToPlayer];
 	  	 	// 		// gameRoom.players[i].chipsBlind = "" + 100;
@@ -110,9 +110,9 @@ consumePlayerActions(data) {
 
 	  	 else if (data.dealerState.playState === "turn"){
     	gameRoom.dealerState.turnElapsedTime = 0;
-    	 var burnedCardDeck = getDeck().dealCard(data.deck);
+    	 var burnedCardDeck = this.getDeck().dealCard(data.deck);
 
-    	 var firstDeal = getDeck().dealCard(burnedCardDeck.cards);
+    	 var firstDeal = this.getDeck().dealCard(burnedCardDeck.cards);
     	 var firstCard = firstDeal.dealt;
     	  gameRoom.cardsInPlay.push(firstCard); //= [firstCard, secondCard, thirdCard];
     	 gameRoom.deck = firstDeal.cards;
@@ -121,9 +121,9 @@ gameRoom.dealerState.playState = "preriver";
 
 	  	 else if (data.dealerState.playState === "river"){
     	gameRoom.dealerState.turnElapsedTime = 0;
-    	 var burnedCardDeck = getDeck().dealCard(data.deck);
+    	 var burnedCardDeck = this.getDeck().dealCard(data.deck);
 
-    	 var firstDeal = getDeck().dealCard(burnedCardDeck.cards);
+    	 var firstDeal = this.getDeck().dealCard(burnedCardDeck.cards);
     	 var firstCard = firstDeal.dealt;
     	  gameRoom.cardsInPlay.push(firstCard); //= [firstCard, secondCard, thirdCard];
     	 gameRoom.deck = firstDeal.cards;
