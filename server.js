@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 //const http = require('http');
 const {EncryptionService} = require('./encryption-service.js');
 var encryptionService = new EncryptionService();
-
+var canConnect = false;
 const {Dealer} = require('./dealer.js');
 //var dealer = new Dealer();
 
@@ -766,7 +766,7 @@ app.post('/connectionpoll', async (req, res) => {
 	 try {
         // Connect to the MongoDB cluster
         //await client.connect();
-        if (client.db.serverConfig.isConnected()){
+        if (canConnect){
         	responseString = await updateConnectionPoll(req.body);
         } 
  		
@@ -989,7 +989,7 @@ const server = app.listen(port, () => {
 	//main().catch(console.error);
 
 	setTimeout(updateLastTimeLoggedIn, 1000);
-
+	canConnect = true;
 })
 
 
