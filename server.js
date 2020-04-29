@@ -602,14 +602,14 @@ async function transitionScene(requestBody){
    await collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(requestBody.email + " changed scene to " +  requestBody.destination);
-  
+  return "" + requestBody.destination;
     //db.close();
   });
    //return data.game
      //result = {chips: data.chips, gameScene: data.gameScene};
   // });
 
-
+return "Failed";
 // console.log(emailAddress);
 //    console.log(emailAddress.length);
 // 	 if (emailAddress.length > 0){
