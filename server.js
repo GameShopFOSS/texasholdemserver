@@ -378,7 +378,7 @@ if (lobbyQueue.length > 0){
 	//if (lobbyQueue[0].players.length < 8){
 	await collection.update(
    { roomId: requestBody.roomId},
-   { $addToSet: { players: {email: requestBody.email, firstname: requestBody.firstname} } }
+   { $push: { players: {email: requestBody.email, firstname: requestBody.firstname} } }
 )
 	result = {success: "OK", roomId: requestBody.roomId};
 //}
