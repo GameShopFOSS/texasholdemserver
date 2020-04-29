@@ -376,9 +376,9 @@ if (lobbyQueue.length > 0){
 	console.log("here");
 	//if (Array.isArray(lobbyQueue[0].players)){
 	//if (lobbyQueue[0].players.length < 8){
-	await collection.update(
-   { roomId: requestBody.roomId},
-   { $push: { players: {email: requestBody.email, firstname: requestBody.firstname} } }
+	await collection.insertOne(
+  // { roomId: requestBody.roomId},   $push
+    { players: {email: requestBody.email, firstname: requestBody.firstname} } 
 )
 	result = {success: "OK", roomId: requestBody.roomId};
 //}
