@@ -339,7 +339,7 @@ gameRoom.dealerState.turnElapsedTime = 0;
 gameRoom.dealerState.playerTurn = "" +(parseInt(gameRoom.dealerState.playerTurn) + 1);
     	}
     	
-    	//  gameRoom.dealerState.turnElapsedTime = (parseIntgameRoom.dealerState.turnElapsedTime + 1) + "";
+    	 gameRoom.dealerState.turnElapsedTime = (currentTime) + "";
     	 gameRoom.playerActions = [];
 
     	 return gameRoom;
