@@ -370,19 +370,28 @@ var result = {error: "Creating joining queue!"};
   const db = await client.db('game');
   try{
   const collection = await db.collection('lobbyQueueData');
-  var lobbyQueue = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, roomId: 1} }).toArray();
-
-if (lobbyQueue.length > 0){
-	console.log("here");
-	//if (Array.isArray(lobbyQueue[0].players)){
-	//if (lobbyQueue[0].players.length < 8){
-	await collection.update(
-   { roomId: requestBody.roomId},
-   { $push: { players: {email: requestBody.email, firstname: requestBody.firstname} } }
-)
-	result = {success: "OK", roomId: requestBody.roomId};
-//}
-}
+  //var lobbyQueue = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, roomId: 1} }).toArray();
+ //await collection.findOne({roomId: requestBody.roomId},)
+await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, players: 1 } }).toArray(function(err, result) {
+    if (err) throw err;
+    result.push({email: requestBody.email, firstname: requestBody.firstname});
+    result.save(function(err){
+        console.log(err);
+    });
+    result = {success: "OK", roomId: requestBody.roomId};
+  //  db.close();
+  });
+// if (lobbyQueue.length > 0){
+// 	console.log("here");
+// 	//if (Array.isArray(lobbyQueue[0].players)){
+// 	//if (lobbyQueue[0].players.length < 8){
+// 	await collection.update(
+//    { roomId: requestBody.roomId},
+//    { $push: { players: {email: requestBody.email, firstname: requestBody.firstname} } }
+// )
+	
+// //}
+// }
 //}
 //    await collection.insertOne(
 //  	{email: '' + requestBody.email,
