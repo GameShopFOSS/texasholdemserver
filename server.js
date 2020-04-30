@@ -379,11 +379,11 @@ var lobbyPlayers = await collection.find({roomId: requestBody.roomId}, { project
  //    result.save(function(err){
  //        console.log(err);
  //    });
- lobbyPlayers.push({email: requestBody.email, firstname: requestBody.firstname});
+ lobbyPlayers.players.push({email: requestBody.email, firstname: requestBody.firstname});
 
 
  	var myquery = {roomId: requestBody.roomId};
-  var newvalues = {$set: { players: [lobbyPlayers.players]}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+  var newvalues = {$set: { players: lobbyPlayers.players}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
    await collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
   //   console.log(actionObject.email + " changed scene to " +  actionObject.destination);
