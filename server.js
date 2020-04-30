@@ -372,28 +372,30 @@ var result = {error: "Creating joining queue!"};
   const collection = await db.collection('lobbyQueueData');
   //var lobbyQueue = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, roomId: 1} }).toArray();
  //await collection.findOne({roomId: requestBody.roomId},)
-var lobbyPlayers = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, players: 1 } }).toArray();
-	// function(err, result) {
- //    if (err) throw err;
+await collection.updateOne({roomId: requestBody.roomId}, $push: {players: [{email: requestBody.email, firstname: requestBody.firstname}]});
+
+// var lobbyPlayers = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, players: 1 } }).toArray();
+// 	// function(err, result) {
+//  //    if (err) throw err;
   
- //    result.save(function(err){
- //        console.log(err);
- //    });
- lobbyPlayers.players.push({email: requestBody.email, firstname: requestBody.firstname});
+//  //    result.save(function(err){
+//  //        console.log(err);
+//  //    });
+//  lobbyPlayers.players.push({email: requestBody.email, firstname: requestBody.firstname});
 
 
- 	var myquery = {roomId: requestBody.roomId};
-  var newvalues = {$set: { players: lobbyPlayers.players}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
-   await collection.updateOne(myquery, newvalues, function(err, res) {
-    if (err) throw err;
-  //   console.log(actionObject.email + " changed scene to " +  actionObject.destination);
+//  	var myquery = {roomId: requestBody.roomId};
+//   var newvalues = {$set: { players: lobbyPlayers.players}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+//    await collection.updateOne(myquery, newvalues, function(err, res) {
+//     if (err) throw err;
+//   //   console.log(actionObject.email + " changed scene to " +  actionObject.destination);
   	
-  // 	var aquery = { roomId: '' + actionObject.roomId};
-  // var anewvalues = {$set: { playerActions: actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
-
-  //   //db.close();
-  });
-    result = {success: "OK", roomId: requestBody.roomId};
+//   // 	var aquery = { roomId: '' + actionObject.roomId};
+//   // var anewvalues = {$set: { playerActions: actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+result = {success: "OK", roomId: requestBody.roomId};
+//   //   //db.close();
+//   });
+    
   //  db.close();
   //});
 // if (lobbyQueue.length > 0){
@@ -434,7 +436,7 @@ var lobbyPlayers = await collection.find({roomId: requestBody.roomId}, { project
    //console.log(resultOfInsert);
 } catch(e) {
 	console.log(e);
-
+result = {error: "Creating joining queue!"};
 	//return false;
 }
 return result;
