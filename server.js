@@ -370,10 +370,12 @@ var result = {error: "Creating joining queue!"};
   const db = await client.db('game');
   try{
   const collection = await db.collection('lobbyQueueData');
+  const collectionTwo = await db.collection('userData');
   //var lobbyQueue = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, roomId: 1} }).toArray();
  //await collection.findOne({roomId: requestBody.roomId},)
-await collection.updateOne({roomId: requestBody.roomId}, {$push: {players: {email: requestBody.email, firstname: requestBody.firstname}}});
-await collection.updateOne({roomId: requestBody.roomId, players: {email: requestBody.email}}, {$set: {players: {email: requestBody.email, firstname: requestBody.firstname}}});
+//var userDataFirstName = await db.collectionTwo.find({email: requestBody.email}, { projection: { _id: 0, roomId: 1} }).toArray();
+await collection.updateOne({roomId: requestBody.roomId}, {$push: {players:{ $each: [{email: requestBody.email, firstname: requestBody.firstname}], position: -1}}});
+//await collection.updateOne({roomId: requestBody.roomId, players: {email: requestBody.email}}, {$set: {players: {email: requestBody.email, firstname: requestBody.firstname}}});
 
 // var lobbyPlayers = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, players: 1 } }).toArray();
 // 	// function(err, result) {
