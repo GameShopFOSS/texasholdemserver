@@ -372,15 +372,27 @@ var result = {error: "Creating joining queue!"};
   const collection = await db.collection('lobbyQueueData');
   //var lobbyQueue = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, roomId: 1} }).toArray();
  //await collection.findOne({roomId: requestBody.roomId},)
-await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, players: 1 } }).toArray(function(err, result) {
+var lobbyPlayers = await collection.find({roomId: requestBody.roomId}, { projection: { _id: 0, players: 1 } }).toArray();
+	// function(err, result) {
+ //    if (err) throw err;
+  
+ //    result.save(function(err){
+ //        console.log(err);
+ //    });
+ lobbyPlayers.push({email: requestBody.email, firstname: requestBody.firstname});
+
+
+ 	var myquery = {roomId: requestBody.roomId};
+  var newvalues = {$set: { players: lobbyPlayers}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+   await collection.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
-    result.push({email: requestBody.email, firstname: requestBody.firstname});
-    result.save(function(err){
-        console.log(err);
-    });
-    result = {success: "OK", roomId: requestBody.roomId};
-  //  db.close();
+   console.log("added to room")
+  result = {success: "OK", roomId: requestBody.roomId};
+    //db.close();
   });
+  
+  //  db.close();
+  //});
 // if (lobbyQueue.length > 0){
 // 	console.log("here");
 // 	//if (Array.isArray(lobbyQueue[0].players)){
