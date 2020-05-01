@@ -75,7 +75,7 @@ consumePlayerActions(data) {
 	  	 			gameRoom.deck = secondDealToPlayer.cards;
 	  	 		}
 
-
+	  	 //gameRoom.dealerState.playerTurn = ""		
     	 gameRoom.dealerState.playState = "preflop";
 	  	 }
 
@@ -261,6 +261,7 @@ gameRoom.dealerState.playState = "finalbet";
 					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 	  	 			//gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
 	  	 		}
+	  	 		gameRoom.dealerState.turnElapsedTime = "0"
 	  	 	}
 
 	  	 	if (parseInt(gameRoom.dealerState.playerTurn) == "7"){
@@ -285,9 +286,9 @@ gameRoom.dealerState.playState = "finalbet";
 					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 	  	 			//gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
 	  	 		}
-
-	  	 	}
 gameRoom.dealerState.turnElapsedTime = "0";
+	  	 	}
+
 	  	 	if (parseInt(gameRoom.dealerState.playerTurn) == "7"){
     	 		gameRoom.dealerState.playState === "river"
     	 	}
@@ -308,8 +309,9 @@ gameRoom.dealerState.turnElapsedTime = "0";
 					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 	  	 			//gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
 	  	 		}
+	  	 		gameRoom.dealerState.turnElapsedTime = "0";
 	  	 	}
-gameRoom.dealerState.turnElapsedTime = "0";
+
 	  	 	if (parseInt(gameRoom.dealerState.playerTurn) == "7"){
     	 		gameRoom.dealerState.playState === "showdown"
     	 	}
