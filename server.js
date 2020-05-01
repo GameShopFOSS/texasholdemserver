@@ -521,6 +521,7 @@ if (gameRoomPlayerActions.length === 0) {
  
 async function gameLoop(){
 try {
+	console.log("in game loop");
         // Connect to the MongoDB cluster
          //await client.connect();
  		const db =  await client.db('game');
@@ -533,7 +534,7 @@ try {
 //});
     await collection.find().forEach(function(data) {
 //smallblind, bigblind, flop, dealflop, playflop, turn, playturn, river, playriver, showdown, scoring, finish
-  
+  console.log("processing room");
   		var resultingRoom = new Dealer().consumePlayerActions(data);
 
  //   if (data.lastUpdate > 10){
@@ -655,6 +656,7 @@ return "" + requestBody.destination;
 // const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
 // 	const client = new MongoClient(uri);
     try {
+    	console.log("in start game");
         // Connect to the MongoDB cluster
          //await client.connect();
  		const db =  await client.db('game');
