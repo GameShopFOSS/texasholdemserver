@@ -1,3 +1,4 @@
+const log = require('why-is-node-running');
 const express = require('express')
 const app = express()
 const {MongoClient} = require('mongodb');
@@ -679,6 +680,7 @@ console.log("here");
  //    console.log(data.email + " disconnected");
  //    //db.close();
  //  });
+ log();
 var playerData = [];
 
 for (i = 0; i < data.players.length; i++){
