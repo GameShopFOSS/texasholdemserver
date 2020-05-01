@@ -985,7 +985,7 @@ app.post('/submitplayeraction', async (req, res) => {
 	var responseString = {response: "error"};
 	 try {
     
-         responseString = await submitplayeraction(req.body);
+         responseString = await submitPlayerAction(req.body);
 
     } catch (e) {
         console.error(e);
