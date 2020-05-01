@@ -382,7 +382,13 @@ return cards;
 shuffleTwoCards(deck){
 	var cards = deck;
 var firstRandom =  Math.floor(Math.random() * cards.length);
-var secondRandom =  this.differentRandom(Math.floor(Math.random() * cards.length));
+var secondRandom =  0;//this.differentRandom(Math.floor(Math.random() * cards.length));
+if (firstRandom > 25){
+	secondRandom = firstRandom - 26;
+
+} else {
+	secondRandom = firstRandom + 25;
+}
 var firstCopyCard = new Card(cards[firstRandom].suit, cards[firstRandom].rank).getCard();
 var secondCopyCard = new Card( cards[secondRandom].suit, cards[secondRandom].rank,).getCard();
 
@@ -425,18 +431,18 @@ return {cards: cards, dealt: firstCopyCard};
 }
 
 
-differentRandom(amount){
+// differentRandom(amount){
 
-var trial = Math.floor(Math.random() * amount);
-// if (trial === amount){
-// 	return this.differentRandom(amount);
+// var trial = Math.floor(Math.random() * amount);
+// // if (trial === amount){
+// // 	return this.differentRandom(amount);
+// // }
+// while (trial === amount){
+// 	 trial = Math.floor(Math.random() * amount);
 // }
-while (trial === amount){
-	 trial = Math.floor(Math.random() * amount);
-}
- return trial;
-}
-}
+//  return trial;
+// }
+// }
 
 
 
