@@ -34,7 +34,7 @@ consumePlayerActions(data) {
 		var gameRoom = data;
 		var dfault = false;
 		var currentTime = parseInt(gameRoom.dealerState.turnElapsedTime) + 1;
-		gamerRoom.dealerState.turnElapsedTime = (parseInt(gameRoom.dealerState.turnElapsedTime) + 1) + "";
+		gameRoom.dealerState.turnElapsedTime = (parseInt(gameRoom.dealerState.turnElapsedTime) + 1) + "";
     	 if (currentTime > 30) {
 //fold or choose dfault action
 			dfault = true;
