@@ -444,6 +444,6 @@ return {cards: cards, dealt: firstCopyCard};
 // }
 // }
 
-
+}
 
 module.exports = {Deck};
