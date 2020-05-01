@@ -487,7 +487,7 @@ if (gameRoomPlayerActions.length === 0) {
   	var aquery = { roomId: '' + actionObject.roomId};
   var anewvalues = {$set: { playerActions: actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
  
-  	 collection.updateOne(aquery, avalues, function(err, res) {
+  	 collection.updateOne(aquery, anewvalues, function(err, res) {
     if (err) throw err;
     console.log(actionObject.email + " changed scene to " +  actionObject.destination);
   	
