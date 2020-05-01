@@ -335,9 +335,9 @@ gameRoom.dealerState.turnElapsedTime = 0;
     	}
     	}
 
-    	if(dfault){
-gameRoom.dealerState.playerTurn = "" +(parseInt(gameRoom.dealerState.playerTurn) + 1);
-    	}
+//     	if(dfault){
+// gameRoom.dealerState.playerTurn = "" +(parseInt(gameRoom.dealerState.playerTurn) + 1);
+//     	}
     	
     	 gameRoom.dealerState.turnElapsedTime = (currentTime) + "";
     	 gameRoom.playerActions = [];
