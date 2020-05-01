@@ -667,9 +667,11 @@ return "" + requestBody.destination;
       // await collection.find().forEach(function(data) { 
  
 //});
+console.log("here");
     await collection.find().forEach(function(data) {
-
+    	console.log("doing find");
    if (data.players.length == 8){
+   	console.log("in lobbyQueue");
 	// var myquery = {  : "false" };
  //  var newvalues = {$set: {disconnected: "true"} };
  //   collection.updateOne(myquery, newvalues, function(err, res) {
@@ -737,6 +739,7 @@ var dealer = new Dealer();
 
 //   }
 });
+    console.log("there");
     } catch (e) {
         console.error(e);
     } 
