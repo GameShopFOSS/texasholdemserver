@@ -555,12 +555,13 @@ try {
 };
 
  async function updateLastTimeLoggedIn(){
-	await startGamesWithEnoughPeople();
- 	await gameLoop();
+	
 
 // const uri = "mongodb+srv://jayevans:dD9kkTx81UKKWn1y@cluster0-phdbo.gcp.mongodb.net/test?retryWrites=true&w=majority";
 // 	const client = new MongoClient(uri);
     try {
+    	await startGamesWithEnoughPeople();
+ 	await gameLoop();
         // Connect to the MongoDB cluster
          //await client.connect();
  		const db =  await client.db('game');
@@ -610,7 +611,7 @@ var myquery = { loggedIn: "true" };
     } 
     finally {
     //    await client.close();
-        setTimeout(updateLastTimeLoggedIn, 1000);
+       await setTimeout(updateLastTimeLoggedIn, 1000);
     }
 
 };
