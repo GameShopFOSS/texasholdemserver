@@ -748,7 +748,7 @@ console.log("after dealer");
    	console.log("in lobbyQueue2");
    	collection.findOneAndDelete(data);
    }
-}
+});
     console.log("there");
     } catch (e) {
         console.error(e);
