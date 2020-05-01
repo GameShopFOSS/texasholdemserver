@@ -688,18 +688,19 @@ playerData.push({email: data.players[i].email, firstname: data.players[i].firstn
 
 
 //*********HERE******
-
+console.log("after push");
 
 
 
 var dealer = new Dealer();
-
+console.log("after dealer");
 //const collectionUserData = await db.collection("userData");
  ///var userDataPlayers = await collection.find({email: collectionUserData.email, chips: collectionUserData.chips}, { projection: { _id: 0, email: 1, chips: 1} }).toArray();
  const collectionGameRoom =  db.collection('gameRoomData');
  var startingDeck = dealer.getDeck().instantiateDeck();
  startingDeck = dealer.getDeck().shuffle(startingDeck);
  var startingDealerState = dealer.initializeDealerState();
+ console.log("after deck");
  collectionGameRoom.insertOne(
  	{roomId: '' + data.roomId,
  	players: playerData,
@@ -713,7 +714,7 @@ var dealer = new Dealer();
     if (err) throw err;
     console.log("1 document inserted");
     //db.close();
-    collection.findOneAndDelete(data);
+    //collection.findOneAndDelete(data);
   });
 
  
@@ -739,6 +740,13 @@ var dealer = new Dealer();
 
 //   }
 });
+     await collection.find().forEach(function(data) {
+    	console.log("doing find2");
+   if (data.players.length == 8){
+   	console.log("in lobbyQueue2");
+   	collection.findOneAndDelete(data);
+   }
+}
     console.log("there");
     } catch (e) {
         console.error(e);
