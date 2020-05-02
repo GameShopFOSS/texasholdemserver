@@ -155,7 +155,7 @@ gameRoom.dealerState.playState = "finalbet";
     	 }
 
     	 if((Array.isArray(data.playerActions) && data.playerActions.length > 0) ){
-    	 	console.log(data.playerActions)
+    	 	console.log(data.playerActions);
     	 }
 		if ((Array.isArray(data.playerActions) && data.playerActions.length > 0) || dfault) {
 

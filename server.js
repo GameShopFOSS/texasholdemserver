@@ -499,21 +499,22 @@ if (gameRoomPlayerActions.length === 0) {
   });
 
 		
-	} else {
-//fold
+	} 
+// 	else {
+// //fold
 
-	var bquery = { roomId: '' + actionObject.roomId};
-  var bnewvalues = {$set: { playerActions: actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+// 	var bquery = { roomId: '' + actionObject.roomId};
+//   var bnewvalues = {$set: { playerActions: actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
  
-  	 collection.updateOne(bquery, bvalues, function(err, res) {
-    if (err) throw err;
-    console.log(actionObject.email +  " changed scene to " +  actionObject.destination);
+//   	 collection.updateOne(bquery, bvalues, function(err, res) {
+//     if (err) throw err;
+//     console.log(actionObject.email +  " action was " +  actionObject.action);
   	
   	
-    //db.close();
-  });
-	}
-}
+//     //db.close();
+//   });
+// 	}
+// }
 	} catch(e){
  
 	}
