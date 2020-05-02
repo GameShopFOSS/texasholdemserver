@@ -468,30 +468,31 @@ try {
 
          //actionObject will have roomId
 //find all collections
+console.log("submit1");
  		const db =  await client.db('game');
 	 const collection =  await db.collection('gameRoomData');
 var gameRoomPlayerActions =  await collection.find({roomId: '' + actionObject.roomId}, { projection: { _id: 0, playerActions: 1 } }).toArray();
 
 if (gameRoomPlayerActions.length === 0) {
-
+console.log("submit2");
 	const collectionUserData = await db.collection('userData');
 	var userChips =  await collectionUserData.find({email: '' + actionObject.email}, { projection: { _id: 0, chips: 1 } }).toArray();
 
 	if (actionObject.action === "call" || actionObject.action === "raise") {
-
+console.log("submit3");
 		var myquery = { email: actionObject.email, password: actionObject.password};
   var newvalues = {$set: { chips: '' + (parseInt(userChips.chips) - parseInt(actionObject.amount))}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
    await collectionUserData.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
     console.log(actionObject.email + " took this action " +  actionObject.action);
-  	
+  	console.log("submit4");
   	var aquery = { roomId: '' + actionObject.roomId};
   var anewvalues = {$set: { playerActions: actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
  
   	 collection.updateOne(aquery, anewvalues, function(err, res) {
     if (err) throw err;
     console.log(actionObject.email + " took this action " +  actionObject.action);
-  	
+  	console.log("submit5");
   	
     //db.close();
   });
