@@ -460,7 +460,8 @@ return result;
 // return false;
  
 // };
-async function submitPlayerAction(actionObject){
+async function submitPlayerAction(actionObject) {
+
 try {
         // Connect to the MongoDB cluster
          //await client.connect();
@@ -497,9 +498,10 @@ if (gameRoomPlayerActions.length === 0) {
 
     //db.close();
   });
-
+}
+}
 		
-	} 
+
 // 	else {
 // //fold
 
@@ -515,6 +517,7 @@ if (gameRoomPlayerActions.length === 0) {
 //   });
 // 	}
 // }
+
 	} catch(e){
  
 	}
