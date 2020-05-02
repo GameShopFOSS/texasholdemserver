@@ -226,15 +226,15 @@ gameRoom.dealerState.playState = "finalbet";
 		gameRoom.players[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 gameRoom.dealerState.turnElapsedTime = "0";
 	  	 	} else {
-	  	 		if (data.playerActions.action === "fold"){
+	  	 		if (data.playerActions[0].action === "fold"){
 					gameRoom.players[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 					gameRoom.dealerState.turnElapsedTime = "0";
-	  	 		} else if (data.playerActions.action === "call") {
+	  	 		} else if (data.playerActions[0].action === "call") {
 	  	 			//gameRoom.players[data.dealerState.playerTurn].chipsBlind =  (parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind) + parseInt(data.playerActions.amount));	
 	  	 			//gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)); //parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind)).ToString();
 				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 				gameRoom.dealerState.turnElapsedTime = "0";
-	  	 		} else if (data.playerActions.action === "raise"){
+	  	 		} else if (data.playerActions[0].action === "raise"){
 					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 					gameRoom.dealerState.turnElapsedTime = "0";
@@ -257,15 +257,15 @@ gameRoom.dealerState.turnElapsedTime = "0";
 		gameRoom.players[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 			gameRoom.dealerState.turnElapsedTime = "0"
 	  	 	} else {
-	  	 		if (data.playerActions.action === "fold"){
+	  	 		if (data.playerActions[0].action === "fold"){
 					gameRoom.players[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 					gameRoom.dealerState.turnElapsedTime = "0";
-	  	 		} else if (data.playerActions.action === "call") {
+	  	 		} else if (data.playerActions[0].action === "call") {
 	  	 			//gameRoom.players[data.dealerState.playerTurn].chipsBlind =  (parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind) + parseInt(data.playerActions.amount));	
 	  	 			//gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)); //parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind)).ToString();
 	  	 			gameRoom.dealerState.turnElapsedTime = "0";
 				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
-	  	 		} else if (data.playerActions.action === "raise"){
+	  	 		} else if (data.playerActions[0].action === "raise"){
 					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 	  	 			//gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)).ToString();
@@ -285,15 +285,15 @@ gameRoom.dealerState.turnElapsedTime = "0";
 		gameRoom.players[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 gameRoom.dealerState.turnElapsedTime = "0";
 	  	 	} else {
-	  	 		if (data.playerActions.action === "fold"){
+	  	 		if (data.playerActions[0].action === "fold"){
 					gameRoom.players[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 					gameRoom.dealerState.turnElapsedTime = "0";
-	  	 		} else if (data.playerActions.action === "call") {
+	  	 		} else if (data.playerActions[0].action === "call") {
 	  	 			//gameRoom.players[data.dealerState.playerTurn].chipsBlind =  (parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind) + parseInt(data.playerActions.amount));	
 	  	 			//gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)); //parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind)).ToString();
 				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 				gameRoom.dealerState.turnElapsedTime = "0";
-	  	 		} else if (data.playerActions.action === "raise"){
+	  	 		} else if (data.playerActions[0].action === "raise"){
 					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 					gameRoom.dealerState.turnElapsedTime = "0";
@@ -312,15 +312,15 @@ gameRoom.dealerState.turnElapsedTime = "0";
 		gameRoom.dealerState.turnElapsedTime = "0";
 
 	  	 	} else {
-	  	 		if (data.playerActions.action === "fold"){
+	  	 		if (data.playerActions[0].action === "fold"){
 					gameRoom.players[parseInt(data.dealerState.playerTurn)].cardsInHand = [];
 					gameRoom.dealerState.turnElapsedTime = "0";
-	  	 		} else if (data.playerActions.action === "call") {
+	  	 		} else if (data.playerActions[0].action === "call") {
 	  	 			//gameRoom.players[data.dealerState.playerTurn].chipsBlind =  (parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind) + parseInt(data.playerActions.amount));	
 	  	 			//gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)); //parseInt(gameRoom.players[data.dealerState.playerTurn].chipsBlind)).ToString();
 				gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 				gameRoom.dealerState.turnElapsedTime = "0";
-	  	 		} else if (data.playerActions.action === "raise"){
+	  	 		} else if (data.playerActions[0].action === "raise"){
 					gameRoom.dealerState.currentPot = (parseInt(gameRoom.dealerState.currentPot) + parseInt(data.playerActions.amount)) + "";
 					gameRoom.dealerState.currentBlind = (parseInt(gameRoom.dealerState.currentBlind) + parseInt(data.playerActions.amount)) + "";
 					gameRoom.dealerState.turnElapsedTime = "0";
