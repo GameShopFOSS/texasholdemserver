@@ -473,7 +473,7 @@ console.log("submit1");
 	 const collection =  await db.collection('gameRoomData');
 var gameRoomPlayerActions =  await collection.find({roomId: '' + actionObject.roomId}, { projection: { _id: 0, playerActions: 1 } }).toArray();
 
-if (gameRoomPlayerActions.length === 0) {
+//if (gameRoomPlayerActions.length === 0) {
 console.log("submit2");
 	const collectionUserData = await db.collection('userData');
 	var userChips =  await collectionUserData.find({email: '' + actionObject.email}, { projection: { _id: 0, chips: 1 } }).toArray();
@@ -499,7 +499,7 @@ console.log("submit3");
 
     //db.close();
   });
-}
+//}
 }
 		
 
