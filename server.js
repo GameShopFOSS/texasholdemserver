@@ -482,14 +482,14 @@ if (gameRoomPlayerActions.length === 0) {
   var newvalues = {$set: { chips: '' + (parseInt(userChips.chips) - parseInt(actionObject.amount))}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
    await collectionUserData.updateOne(myquery, newvalues, function(err, res) {
     if (err) throw err;
-    console.log(actionObject.email + " changed scene to " +  actionObject.destination);
+    console.log(actionObject.email + " took this action " +  actionObject.action);
   	
   	var aquery = { roomId: '' + actionObject.roomId};
   var anewvalues = {$set: { playerActions: actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
  
   	 collection.updateOne(aquery, anewvalues, function(err, res) {
     if (err) throw err;
-    console.log(actionObject.email + " changed scene to " +  actionObject.destination);
+    console.log(actionObject.email + " took this action " +  actionObject.action);
   	
   	
     //db.close();
