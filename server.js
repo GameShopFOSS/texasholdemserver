@@ -487,7 +487,7 @@ console.log("submit3");
     console.log(actionObject.email + " took this action " +  actionObject.action);
   	console.log("submit4");
   	var aquery = { roomId: '' + actionObject.roomId};
-  var anewvalues = {$push: { playerActions{actionObject}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
+  var anewvalues = {$push: { playerActions: { $each : [actionObject]}}};  //{$set: {disconnected: "false", loggedIn: "true", lastUpdate: "0" } };
  
   	 collection.updateOne(aquery, anewvalues, function(err, res) {
     if (err) throw err;
